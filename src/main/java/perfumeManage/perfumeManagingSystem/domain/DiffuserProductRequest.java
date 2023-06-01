@@ -2,12 +2,10 @@ package perfumeManage.perfumeManagingSystem.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -26,8 +24,22 @@ public class DiffuserProductRequest {
 
     private int amount;
 
-    private LocalDate date;
+    private LocalDate deadline;
+    private String image;
 
-    @OneToMany(mappedBy = "diffuserProductRequest")
-    private List<Image> image = new ArrayList<>();
+    public static DiffuserProductRequest diffuserRequestCreate(Customer customer, DiffuserRequestDto diffuserRequestDto) {
+        DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
+
+        LocalDate deadline = LocalDate.of(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
+        diffuserProductRequest.setCustomer(customer);
+        diffuserProductRequest.setName(diffuserRequestDto.getName());
+        diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());
+        diffuserProductRequest.setAmount(diffuserRequestDto.getAmount());
+        diffuserProductRequest.setDeadline(deadline);
+        diffuserProductRequest.setImage(diffuserRequestDto.getImage());
+
+//        for(DiffuserProductRequest diffuserProductRequest1 : )
+
+        return diffuserProductRequest;
+    }
 }

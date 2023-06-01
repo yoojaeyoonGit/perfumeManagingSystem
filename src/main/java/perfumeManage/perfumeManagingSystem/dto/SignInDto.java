@@ -21,7 +21,7 @@ public class SignInDto {
     private int password;
 
     @Enumerated(EnumType.STRING)
-    Gender gender;
+    private Gender gender;
     private int age;
     private String country;
     private String city;

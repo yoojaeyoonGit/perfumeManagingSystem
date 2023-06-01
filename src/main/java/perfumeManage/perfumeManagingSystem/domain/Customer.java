@@ -32,8 +32,17 @@ public class Customer {
     private Auth auth;
 
     @OneToMany(mappedBy = "customer")
-    private List<PerfumeProductRequest> perfumeRequest = new ArrayList<>();
+    private List<PerfumeProductRequest> perfumeRequests = new ArrayList<>();
 
     @OneToMany(mappedBy = "customer")
-    private List<PerfumeProductRequest> DiffuserRequest = new ArrayList<>();
+    private List<DiffuserProductRequest> diffuserRequests = new ArrayList<>();
+
+    //연관관계메소드
+    public void addDiffuserProductRequest(DiffuserProductRequest diffuserProductRequest) {
+        diffuserRequests.add(diffuserProductRequest);
+    }
+
+    public void addPerfumeProductRequest(PerfumeProductRequest perfumeProductRequest) {
+        perfumeRequests.add(perfumeProductRequest);
+    }
 }

@@ -1,11 +1,11 @@
 package perfumeManage.perfumeManagingSystem.repository;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,5 +17,11 @@ public class CustomerRepository {
 
     public Customer findById(Long id) {
         return em.find(Customer.class, id);
+    }
+
+    public List<Customer> findAll() {
+        return em.createQuery("select c from Customer c", Customer.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
+                .getResultList();
+        //SQL은 테이블에 대상으로 쿼리하는데 JPQL은 엔티티 객체를 대상으로 쿼리한다.
     }
 }
