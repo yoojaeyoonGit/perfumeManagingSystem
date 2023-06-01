@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -25,5 +28,6 @@ public class DiffuserProductRequest {
 
     private LocalDate date;
 
-    private String image;
+    @OneToMany(mappedBy = "diffuserProductRequest")
+    private List<Image> image = new ArrayList<>();
 }

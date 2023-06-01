@@ -1,4 +1,4 @@
 package perfumeManage.perfumeManagingSystem.domain;
 public enum Auth {
-    Manager, GENERAL
+    Manager, General
 }

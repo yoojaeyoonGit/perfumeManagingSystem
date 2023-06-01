@@ -16,7 +16,7 @@ public class Customer {
     @Column(name = "customer_id")
     private Long id;
     private String name;
-    private String password;
+    private int password;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

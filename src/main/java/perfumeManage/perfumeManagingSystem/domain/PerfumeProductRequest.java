@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -25,5 +27,8 @@ public class PerfumeProductRequest {
 
     private LocalDate date;
 
-    private String image;
+    @OneToMany(mappedBy = "perfumeProductRequest")
+    private List<Image> image = new ArrayList<>();
+
+
 }

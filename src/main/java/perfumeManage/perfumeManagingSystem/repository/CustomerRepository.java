@@ -14,4 +14,8 @@ public class CustomerRepository {
     public void save(Customer customer) {
         em.persist(customer);
     }
+
+    public Customer findById(Long id) {
+        return em.find(Customer.class, id);
+    }
 }
