@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter @Setter
 public class PerfumeProductRequest {
     @Id @GeneratedValue
-    @Column(name = "perfumeProductRequest")
+    @Column(name = "perfumeProductRequest_id")
     private Long Id;
 
     @ManyToOne

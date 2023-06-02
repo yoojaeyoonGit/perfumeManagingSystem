@@ -39,4 +39,8 @@ public class ProcessingRequest {
     public void addDiffuserProcessingRequest(DiffuserProductRequest diffuserProductRequest) {
         diffuserProductRequests.add(diffuserProductRequest);
     }
+
+    public void addPerfumeProcessingRequest(PerfumeProductRequest perfumeProductRequest) {
+        perfumeProductRequests.add(perfumeProductRequest);
+    }
 }

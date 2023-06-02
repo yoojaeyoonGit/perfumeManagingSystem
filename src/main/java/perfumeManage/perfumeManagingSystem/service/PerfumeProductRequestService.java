@@ -10,6 +10,7 @@ import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
 import perfumeManage.perfumeManagingSystem.repository.DiffuserProductRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.PerfumeProductRequestRepository;
+import perfumeManage.perfumeManagingSystem.repository.ProcessingRequestRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +22,7 @@ public class PerfumeProductRequestService {
 
     private final PerfumeProductRequestRepository perfumeProductRequestRepository;
 
+    private final ProcessingRequestRepository processingRequestRepository;
     @Transactional
     public void savePerfumeProductRequest(Customer customer, PerfumeRequestDto perfumeRequestDto) {
 
@@ -44,7 +46,20 @@ public class PerfumeProductRequestService {
         perfumeRequestStatusDetect) {
             System.out.println("this is Perfume name : " + perfumeProductRequest.getName());
             System.out.println("this is status : " + perfumeRequestStatusDetect.getStatus());
+
             perfumeProductRequest.setStatus(perfumeRequestStatusDetect.getStatus());
+
+            Customer customer = perfumeProductRequest.getCustomer();
+            ProcessingRequest processingRequest = customer.getProcessingRequest();
+
+            if (processingRequest == null) {
+                processingRequest = ProcessingRequest.createProcessingRequest(customer);
+                perfumeProductRequest.setProcessingRequest(processingRequest);
+                processingRequestRepository.save(processingRequest);
+            }
+
+            perfumeProductRequest.setProcessingRequest(processingRequest);
+            processingRequest.addPerfumeProcessingRequest(perfumeProductRequest);
         }
 
         public PerfumeProductRequest find(Long id) {

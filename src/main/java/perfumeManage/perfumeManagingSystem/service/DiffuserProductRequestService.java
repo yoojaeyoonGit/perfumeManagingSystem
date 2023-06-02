@@ -60,6 +60,7 @@ public class DiffuserProductRequestService {
             processingRequestRepository.save(processingRequest);
         }
 
+        diffuserProductRequest.setProcessingRequest(processingRequest);
         processingRequest.addDiffuserProcessingRequest(diffuserProductRequest);
     }
 
