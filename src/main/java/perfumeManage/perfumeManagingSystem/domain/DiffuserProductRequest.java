@@ -18,6 +18,10 @@ public class DiffuserProductRequest {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "processingRequest_id")
+    private ProcessingRequest processingRequest;
+
     private String name;
 
     private String recipe;
@@ -27,19 +31,12 @@ public class DiffuserProductRequest {
     private LocalDate deadline;
     private String image;
 
-    public static DiffuserProductRequest diffuserRequestCreate(Customer customer, DiffuserRequestDto diffuserRequestDto) {
-        DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
+    @Enumerated(EnumType.STRING)
+    private ProductionStatus status;
 
-        LocalDate deadline = LocalDate.of(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
-        diffuserProductRequest.setCustomer(customer);
-        diffuserProductRequest.setName(diffuserRequestDto.getName());
-        diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());
-        diffuserProductRequest.setAmount(diffuserRequestDto.getAmount());
-        diffuserProductRequest.setDeadline(deadline);
-        diffuserProductRequest.setImage(diffuserRequestDto.getImage());
 
+//    public static DiffuserProductRequest diffuserRequestCreate(Customer customer, DiffuserRequestDto diffuserRequestDto) {
 //        for(DiffuserProductRequest diffuserProductRequest1 : )
-
-        return diffuserProductRequest;
-    }
+//        return diffuserProductRequest;
+//    }
 }

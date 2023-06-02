@@ -17,8 +17,13 @@ public class DiffuserProductRequestRepository {
         em.persist(diffuserProductRequest);
     }
 
+    public DiffuserProductRequest find(Long diffuserProductRequestId) {
+        return em.find(DiffuserProductRequest.class, diffuserProductRequestId);
+    }
+
+
     public List<DiffuserProductRequest> findAll() {
-        return em.createQuery("select p from DiffuserProductRequest p", DiffuserProductRequest.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
+        return em.createQuery("select d from DiffuserProductRequest d", DiffuserProductRequest.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
                 .getResultList();
     }
 }

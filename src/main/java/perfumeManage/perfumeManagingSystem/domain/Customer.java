@@ -16,7 +16,7 @@ public class Customer {
     @Column(name = "customer_id")
     private Long id;
     private String name;
-    private int password;
+    private String password;
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -30,6 +30,8 @@ public class Customer {
     private LocalDate signUpDate;
     @Enumerated(EnumType.STRING)
     private Auth auth;
+    @OneToOne(mappedBy = "customer")
+    private ProcessingRequest processingRequest;
 
     @OneToMany(mappedBy = "customer")
     private List<PerfumeProductRequest> perfumeRequests = new ArrayList<>();

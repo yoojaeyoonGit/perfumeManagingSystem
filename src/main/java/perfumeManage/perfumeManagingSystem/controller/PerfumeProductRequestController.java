@@ -7,9 +7,12 @@ package perfumeManage.perfumeManagingSystem.controller;
         import org.springframework.web.bind.annotation.PostMapping;
         import org.springframework.web.bind.annotation.RequestBody;
         import perfumeManage.perfumeManagingSystem.domain.Customer;
+        import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
         import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
+        import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
+        import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.service.CustomerService;
         import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
         import perfumeManage.perfumeManagingSystem.service.PerfumeProductRequestService;
@@ -37,5 +40,14 @@ public class PerfumeProductRequestController {
         Customer customer = customerService.findCustomer(id);
         perfumeProductRequestService.savePerfumeProductRequest(customer, perfumeRequestDto);
         return "request/perfumeRequest";
+    }
+
+
+
+    @PostMapping("{id}/perfumeProduction")
+    public String ChangePerfumeRequestStatus(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
+        PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
+        perfumeProductRequestService.ChangePerfumeProductRequestStatus(perfumeProductRequest, perfumeRequestStatusDetect);
+        return "request/diffuserRequest";
     }
 }

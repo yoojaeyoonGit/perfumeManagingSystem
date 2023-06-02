@@ -2,17 +2,11 @@ package perfumeManage.perfumeManagingSystem.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
 
 import javax.persistence.EntityManager;
-
-
-        import lombok.RequiredArgsConstructor;
-        import org.springframework.stereotype.Repository;
-        import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,5 +15,15 @@ public class PerfumeProductRequestRepository {
 
     public void save(PerfumeProductRequest perfumeProductRequest) {
         em.persist(perfumeProductRequest);
+    }
+
+    public PerfumeProductRequest find(Long perfumeProductRequestId) {
+        return em.find(PerfumeProductRequest.class, perfumeProductRequestId);
+    }
+
+
+    public List<PerfumeProductRequest> findAll() {
+        return em.createQuery("select p from PerfumeProductRequest p", PerfumeProductRequest.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
+                .getResultList();
     }
 }

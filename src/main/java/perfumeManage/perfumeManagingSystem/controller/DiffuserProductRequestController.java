@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
+import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
 
@@ -29,6 +30,13 @@ public class DiffuserProductRequestController {
     public String diffuserRequest(@PathVariable("id") Long id, @RequestBody DiffuserRequestDto diffuserRequestDto) {
         Customer customer = customerService.findCustomer(id);
         diffuserProductRequestService.saveDiffuserProductRequest(customer, diffuserRequestDto);
+        return "request/diffuserRequest";
+    }
+
+    @PostMapping("{id}/diffuserProduction")
+    public String ChangeDiffuserRequestStatus(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+        DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
+        diffuserProductRequestService.ChangeDiffuserProductRequestStatus(diffuserProductRequest, diffuserRequestStatusDetect);
         return "request/diffuserRequest";
     }
 }

@@ -17,6 +17,11 @@ public class PerfumeProductRequest {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JoinColumn(name = "processingRequest_id")
+    private ProcessingRequest processingRequest;
+
+
     private String name;
 
     private String recipe;
@@ -26,4 +31,7 @@ public class PerfumeProductRequest {
     private LocalDate deadline;
 
     private String image;
+
+    @Enumerated(EnumType.STRING)
+    private ProductionStatus status;
 }
