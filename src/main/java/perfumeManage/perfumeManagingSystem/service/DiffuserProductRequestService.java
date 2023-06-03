@@ -3,12 +3,10 @@ package perfumeManage.perfumeManagingSystem.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import perfumeManage.perfumeManagingSystem.domain.Customer;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProductionStatus;
+import perfumeManage.perfumeManagingSystem.domain.*;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
+import perfumeManage.perfumeManagingSystem.repository.CompleteRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.DiffuserProductRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.ProcessingRequestRepository;
 
@@ -21,6 +19,7 @@ import java.util.List;
 public class DiffuserProductRequestService {
     private final DiffuserProductRequestRepository diffuserProductRequestRepository;
     private final ProcessingRequestRepository processingRequestRepository;
+    private final CompleteRequestRepository completeRequestRepository;
 
 
     @Transactional
@@ -41,7 +40,7 @@ public class DiffuserProductRequestService {
     }
 
     @Transactional
-    public void ChangeDiffuserProductRequestStatus(DiffuserProductRequest diffuserProductRequest, DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+    public void changeDiffuserProductRequestStatusToProcessing(DiffuserProductRequest diffuserProductRequest, DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
         System.out.println("this is diffuser name : " + diffuserProductRequest.getName());
         System.out.println("this is status : " + diffuserRequestStatusDetect.getStatus());
 
@@ -62,6 +61,45 @@ public class DiffuserProductRequestService {
 
         diffuserProductRequest.setProcessingRequest(processingRequest);
         processingRequest.addDiffuserProcessingRequest(diffuserProductRequest);
+    }
+
+
+    // 구조적인 문제 발생
+    // 주문 상태를 변경하는 과정에서 각각 [요청, 진행 중, 완료]를 구분하여 보여주는 페이지를 만들기 위해 테이블을 각각 상태별로 따로 구축하였음
+    // 이 부븐이 구조적으로 잘못 생각한 것 같음
+
+    // processingRequest 를 받은 이유는 진행 중인 요청의 테이블에서 지우고 위해 받았다.
+    @Transactional
+    public void changeDiffuserProductRequestStatusToComplete(ProcessingRequest processingRequest, DiffuserProductRequest diffuserProductRequest, DiffuserRequestStatusDetect diffuserRequestStatusDetect ) {
+        diffuserProductRequest.setStatus(diffuserRequestStatusDetect.getStatus());
+
+        Customer customer = diffuserProductRequest.getCustomer();
+        CompleteRequest completeRequest = customer.getCompleteRequest();
+
+        if (completeRequest == null) {
+            completeRequest = CompleteRequest.createCompleteRequest(customer);
+            diffuserProductRequest.setCompleteRequest(completeRequest);
+            completeRequestRepository.save(completeRequest);
+        }
+
+        List<DiffuserProductRequest> processingDiffusers = processingRequest.getDiffuserProductRequests();
+//        for(DiffuserProductRequest processingDiffuser : processingDiffusers) {
+//            if (diffuserProductRequest == processingDiffuser) {
+//                processingDiffuser.setProcessingRequest(null);
+//                processingDiffusers.remove(processingDiffuser);
+//            }
+//        }
+
+        for (int i = 0; i < processingDiffusers.size(); i++) {
+            if (diffuserProductRequest == processingDiffusers.get(i)) {
+                processingDiffusers.get(i).setProcessingRequest(null);
+                processingDiffusers.remove(processingDiffusers.get(i));
+            }
+        }
+
+
+        diffuserProductRequest.setCompleteRequest(completeRequest);
+        completeRequest.addDiffuserCompleteRequest(diffuserProductRequest);
     }
 
     public DiffuserProductRequest find(Long id) {

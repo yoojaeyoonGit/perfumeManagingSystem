@@ -22,6 +22,11 @@ public class DiffuserProductRequest {
     @JoinColumn(name = "processingRequest_id")
     private ProcessingRequest processingRequest;
 
+    @ManyToOne
+    @JoinColumn(name = "completeRequest_id")
+    private CompleteRequest completeRequest;
+
+
     private String name;
 
     private String recipe;

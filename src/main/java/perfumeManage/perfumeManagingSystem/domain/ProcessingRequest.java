@@ -24,6 +24,8 @@ public class ProcessingRequest {
     @OneToMany(mappedBy = "processingRequest")
     private List<PerfumeProductRequest> perfumeProductRequests = new ArrayList<>();
 
+
+
     private int count;
 
     //생성 메소드

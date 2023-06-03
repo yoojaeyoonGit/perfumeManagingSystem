@@ -2,18 +2,14 @@ package perfumeManage.perfumeManagingSystem.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,10 +29,22 @@ public class DiffuserProductRequestController {
         return "request/diffuserRequest";
     }
 
-    @PostMapping("{id}/diffuserProduction")
-    public String ChangeDiffuserRequestStatus(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+    @PutMapping("{id}/diffuserProductionProcessing")
+    public String ChangeDiffuserRequestStatusToProcessing(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
         DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
-        diffuserProductRequestService.ChangeDiffuserProductRequestStatus(diffuserProductRequest, diffuserRequestStatusDetect);
+        diffuserProductRequestService.changeDiffuserProductRequestStatusToProcessing(diffuserProductRequest, diffuserRequestStatusDetect);
         return "request/diffuserRequest";
     }
+
+    @PutMapping("{id}/diffuserProductionComplete")
+    public String ChangeDiffuserRequestStatusToComplete(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+        DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
+
+        ProcessingRequest processingRequest = diffuserProductRequest.getProcessingRequest();
+        diffuserProductRequestService.changeDiffuserProductRequestStatusToComplete (processingRequest, diffuserProductRequest, diffuserRequestStatusDetect);
+        return "request/diffuserRequest";
+    }
+
+
+
 }

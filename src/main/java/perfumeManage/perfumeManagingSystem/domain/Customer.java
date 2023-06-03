@@ -33,6 +33,9 @@ public class Customer {
     @OneToOne(mappedBy = "customer")
     private ProcessingRequest processingRequest;
 
+    @OneToOne(mappedBy = "customer")
+    private CompleteRequest completeRequest;
+
     @OneToMany(mappedBy = "customer")
     private List<PerfumeProductRequest> perfumeRequests = new ArrayList<>();
 
