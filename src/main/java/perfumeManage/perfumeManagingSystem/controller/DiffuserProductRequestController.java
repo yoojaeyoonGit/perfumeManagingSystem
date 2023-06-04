@@ -38,13 +38,16 @@ public class DiffuserProductRequestController {
 
     @PutMapping("{id}/diffuserProductionComplete")
     public String ChangeDiffuserRequestStatusToComplete(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
-        DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
+        try{
 
-        ProcessingRequest processingRequest = diffuserProductRequest.getProcessingRequest();
-        diffuserProductRequestService.changeDiffuserProductRequestStatusToComplete (processingRequest, diffuserProductRequest, diffuserRequestStatusDetect);
-        return "request/diffuserRequest";
+            DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
+
+            ProcessingRequest processingRequest = diffuserProductRequest.getProcessingRequest();
+            diffuserProductRequestService.changeDiffuserProductRequestStatusToComplete (processingRequest, diffuserProductRequest, diffuserRequestStatusDetect);
+            return "request/diffuserRequest";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/1/main";
+        }
     }
-
-
-
 }

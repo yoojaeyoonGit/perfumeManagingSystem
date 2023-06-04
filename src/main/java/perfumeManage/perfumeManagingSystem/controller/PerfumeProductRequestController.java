@@ -2,12 +2,12 @@ package perfumeManage.perfumeManagingSystem.controller;
 
         import lombok.RequiredArgsConstructor;
         import org.springframework.stereotype.Controller;
-        import org.springframework.web.bind.annotation.GetMapping;
-        import org.springframework.web.bind.annotation.PathVariable;
-        import org.springframework.web.bind.annotation.PostMapping;
-        import org.springframework.web.bind.annotation.RequestBody;
+        import org.springframework.web.bind.annotation.*;
         import perfumeManage.perfumeManagingSystem.domain.Customer;
+        import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
+        import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
+        import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.service.CustomerService;
@@ -40,10 +40,27 @@ public class PerfumeProductRequestController {
 
 
 
-    @PostMapping("{id}/perfumeProduction")
-    public String ChangePerfumeRequestStatus(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
+    @PutMapping ("{id}/perfumeProductionProcessing")
+    public String ChangePerfumeRequestStatusToProcessing(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
         PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
-        perfumeProductRequestService.ChangePerfumeProductRequestStatus(perfumeProductRequest, perfumeRequestStatusDetect);
+        perfumeProductRequestService.ChangePerfumeProductRequestStatusToProcessing(perfumeProductRequest, perfumeRequestStatusDetect);
         return "request/diffuserRequest";
+    }
+
+    @PutMapping("{id}/perfumeProductionComplete")
+    public String ChangPerfumeRequestStatusToComplete(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
+        try {
+
+            PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
+
+            ProcessingRequest processingRequest = perfumeProductRequest.getProcessingRequest();
+            System.out.println(processingRequest + " 없지?");
+            perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest, perfumeRequestStatusDetect);
+            return "request/diffuserRequest";
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("hello error :" + e);
+            return "hello";
+        }
     }
 }

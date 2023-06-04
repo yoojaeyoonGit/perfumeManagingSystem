@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
 import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
+import perfumeManage.perfumeManagingSystem.repository.CompleteRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.PerfumeProductRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.ProcessingRequestRepository;
 
@@ -20,6 +22,8 @@ public class PerfumeProductRequestService {
     private final PerfumeProductRequestRepository perfumeProductRequestRepository;
 
     private final ProcessingRequestRepository processingRequestRepository;
+
+    private final CompleteRequestRepository completeRequestRepository;
     @Transactional
     public void savePerfumeProductRequest(Customer customer, PerfumeRequestDto perfumeRequestDto) {
 
@@ -39,7 +43,7 @@ public class PerfumeProductRequestService {
     }
 
         @Transactional
-        public void ChangePerfumeProductRequestStatus(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect
+        public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect
         perfumeRequestStatusDetect) {
             System.out.println("this is Perfume name : " + perfumeProductRequest.getName());
             System.out.println("this is status : " + perfumeRequestStatusDetect.getStatus());
@@ -58,6 +62,40 @@ public class PerfumeProductRequestService {
             perfumeProductRequest.setProcessingRequest(processingRequest);
             processingRequest.addPerfumeProcessingRequest(perfumeProductRequest);
         }
+
+    @Transactional
+    public void changePerfumeProductRequestStatusToComplete(ProcessingRequest processingRequest, PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect perfumeRequestStatusDetect ) {
+            perfumeProductRequest.setStatus(perfumeRequestStatusDetect.getStatus());
+
+            Customer customer = perfumeProductRequest.getCustomer();
+            CompleteRequest completeRequest = customer.getCompleteRequest();
+
+            if (completeRequest == null) {
+                completeRequest = CompleteRequest.createCompleteRequest(customer);
+                perfumeProductRequest.setCompleteRequest(completeRequest);
+                completeRequestRepository.save(completeRequest);
+            }
+
+            List<PerfumeProductRequest> processingPerfumes = processingRequest.getPerfumeProductRequests();
+    //        for(DiffuserProductRequest processingDiffuser : processingDiffusers) {
+    //            if (diffuserProductRequest == processingDiffuser) {
+    //                processingDiffuser.setProcessingRequest(null);
+    //                processingDiffusers.remove(processingDiffuser);
+    //            }
+    //        }
+
+            for (int i = 0; i < processingPerfumes.size(); i++) {
+                if (perfumeProductRequest == processingPerfumes.get(i)) {
+                    processingPerfumes.get(i).setProcessingRequest(null);
+                    processingPerfumes.remove(processingPerfumes.get(i));
+                }
+            }
+
+            perfumeProductRequest.setCompleteRequest(completeRequest);
+            completeRequest.addPerfumeCompleteRequest(perfumeProductRequest);
+    }
+
+
 
         public PerfumeProductRequest find(Long id) {
             PerfumeProductRequest perfumeProductRequest = perfumeProductRequestRepository.find(id);
