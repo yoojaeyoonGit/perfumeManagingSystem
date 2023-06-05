@@ -102,7 +102,7 @@ public class PerfumeProductRequestService {
             return perfumeProductRequest;
         }
 
-        public List<PerfumeProductRequest> findAllDiffuserProductRequest() {
+        public List<PerfumeProductRequest> findAllPerfumeProductRequest() {
             return perfumeProductRequestRepository.findAll();
         }
 }

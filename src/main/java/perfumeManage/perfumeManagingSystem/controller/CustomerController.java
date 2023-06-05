@@ -42,7 +42,7 @@ public class CustomerController {
             System.out.println("Introducing Our diffusers : " + diffuserProductRequest.getName());
         }
 
-        List <PerfumeProductRequest> perfumeProductRequests = perfumeProductRequestService.findAllDiffuserProductRequest();
+        List <PerfumeProductRequest> perfumeProductRequests = perfumeProductRequestService.findAllPerfumeProductRequest();
         for (PerfumeProductRequest perfumeProductRequest : perfumeProductRequests) {
             System.out.println("Introducing Our perfumes : " + perfumeProductRequest.getName());
         }

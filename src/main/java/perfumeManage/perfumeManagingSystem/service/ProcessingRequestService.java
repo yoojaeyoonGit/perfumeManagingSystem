@@ -22,4 +22,8 @@ public class ProcessingRequestService {
         return processingRequestRepository.findById(id);
     }
 
+    public List<ProcessingRequest> findAllProcessingRequest() {
+        return processingRequestRepository.findAllProcessingProduct();
+    }
+
 }
