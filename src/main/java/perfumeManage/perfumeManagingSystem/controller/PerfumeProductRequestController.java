@@ -4,10 +4,8 @@ package perfumeManage.perfumeManagingSystem.controller;
         import org.springframework.stereotype.Controller;
         import org.springframework.web.bind.annotation.*;
         import perfumeManage.perfumeManagingSystem.domain.Customer;
-        import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
-        import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.service.CustomerService;
@@ -28,7 +26,7 @@ public class PerfumeProductRequestController {
         for (PerfumeProductRequest perfumeProductRequest : perfumeRequests) {
             System.out.println(perfumeProductRequest.getName() + " This is perfume name " + " for " + customer.getName());
         }
-        return "hello";
+        return "red";
     }
 
     @PostMapping("{id}/perfumeProduct")
@@ -60,7 +58,7 @@ public class PerfumeProductRequestController {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("hello error :" + e);
-            return "hello";
+            return "red";
         }
     }
 }

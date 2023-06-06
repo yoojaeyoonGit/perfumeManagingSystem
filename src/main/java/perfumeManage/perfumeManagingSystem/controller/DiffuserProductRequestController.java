@@ -19,7 +19,7 @@ public class DiffuserProductRequestController {
     private final CustomerService customerService;
     @GetMapping
     public String hello() {
-        return "hello";
+        return "red";
     }
 
     @PostMapping("{id}/diffuserProduct")
