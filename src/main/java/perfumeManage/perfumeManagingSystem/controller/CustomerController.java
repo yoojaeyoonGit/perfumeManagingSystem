@@ -3,14 +3,8 @@ package perfumeManage.perfumeManagingSystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import perfumeManage.perfumeManagingSystem.domain.Customer;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
-import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
+import org.springframework.web.bind.annotation.*;
+import perfumeManage.perfumeManagingSystem.domain.*;
 import perfumeManage.perfumeManagingSystem.dto.CustomerDto;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
@@ -62,9 +56,18 @@ public class CustomerController {
         }
         return "customer/customer";
     }
-    @PostMapping("/customer")
-    public String signIn(@RequestBody CustomerDto customerDto) {
+
+    @GetMapping("/customer/new")
+    public String Join(Model model){
+        model.addAttribute("customerDto", new CustomerDto());
+        return "customer/createCustomerForm";
+    }
+
+
+    @PostMapping("/customer/new")
+    public String signIn(CustomerDto customerDto) {
+        customerDto.setAuth(Auth.General);
         customerService.saveCustomer(customerDto);
-        return "customer/madeCustomer";
+        return "redirect:/login";
     }
 }
