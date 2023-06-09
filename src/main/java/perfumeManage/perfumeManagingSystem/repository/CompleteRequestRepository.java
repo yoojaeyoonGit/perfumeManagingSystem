@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import perfumeManage.perfumeManagingSystem.domain.CompleteRequest;
 import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,5 +21,10 @@ public class CompleteRequestRepository {
     public List<CompleteRequest> findAllCompleteRequest () {
         return em.createQuery("select d from CompleteRequest d", CompleteRequest.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
                 .getResultList();
+    }
+
+
+    public CompleteRequest findById(Long id) {
+        return em.find(CompleteRequest.class, id);
     }
 }

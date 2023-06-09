@@ -31,7 +31,7 @@
         <p class="lead">주문 확인 기능</p>
         <p>
             <a class="btn btn-lg btn-info" href="/order">주문한 디퓨저 확인하기</a>
-            <a class="btn btn-lg btn-info" href="/orders">주문한 향수 확인하기</a>
+            <a class="btn btn-lg btn-info" th:href="@{{id}/checkAll/perfume (id=${customer.id})}">주문한 향수 확인하기</a>
             <a href="#" th:href="@{/cart/{id} (id=${customer.id})}"
                class="btn btn-lg btn-info" role="button">장바구니</a>
         </p>
