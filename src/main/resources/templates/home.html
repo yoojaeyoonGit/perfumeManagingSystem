@@ -13,6 +13,7 @@
         <p>
             <a class="btn btn-lg btn-secondary" href="/customer/new">회원 가입</a>
             <a class="btn btn-lg btn-secondary" href="/customer">회원 목록</a>
+            <a class="btn btn-lg btn-secondary" th:href="@{/{id}/auth (id=${customer.id})}">회원 권한 변경</a>
         </p>
         <p class="lead">상품 기능</p>
         <p>

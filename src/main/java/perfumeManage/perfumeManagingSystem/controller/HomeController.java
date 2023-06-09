@@ -13,6 +13,7 @@ import perfumeManage.perfumeManagingSystem.service.CustomerService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -22,28 +23,33 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         try{
-            System.out.println("시발아1111");
-            HttpSession session = httpServletRequest.getSession(false);
-            System.out.println("하 ... "+ session.getAttribute(SessionConst.LOGIN_CUSTOMER));
-            System.out.println();
+            // 회원 가입된 회원이 없다면 회원가입 페이지로 있다면 로그인 페이지로
+            List <Customer> signedUpCustomerList = customerService.findAllCustomer();
 
-            if (session.getAttribute(SessionConst.LOGIN_CUSTOMER) == null) {
+            if (signedUpCustomerList.isEmpty()) {
                 return "redirect:/customer/new";
-
             } else {
-                Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
-                Long customerId = loggedInCustomer.getId();
-//            long customerId = 1;
-                Customer customer = customerService.findCustomer(customerId);
-//
-                model.addAttribute(customer);
-//            log.info("this is session " + customer.getName());
 
-                return "home";
+                HttpSession session = httpServletRequest.getSession(false);
+                System.out.println();
+                if (session == null) {
+                    return "redirect:/login";
+                }
+
+                if (session.getAttribute(SessionConst.LOGIN_CUSTOMER) == null) {
+                    return "redirect:/login";
+                } else {
+                    Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
+                    Long customerId = loggedInCustomer.getId();
+                    Customer customer = customerService.findCustomer(customerId);
+//
+                    model.addAttribute(customer);
+
+                    return "home";
+                }
             }
         } catch (Exception e) {
             e.getStackTrace();
-            System.out.printf("시발아");
             return "home";
         }
     }

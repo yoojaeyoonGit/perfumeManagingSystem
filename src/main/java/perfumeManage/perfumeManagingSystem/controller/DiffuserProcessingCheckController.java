@@ -44,7 +44,7 @@ public class DiffuserProcessingCheckController {
             for(DiffuserProductRequest diffuserProductRequestComplete : diffuserProductRequestsComplete) {
                 System.out.println("customer name = " + customer + " and your complete diffuser is " + diffuserProductRequestComplete.getName());
             }
-            return "authority/authorityPage";
+            return "authorizationPage";
         } else {
 
             // 매니저 권한으로 모든 주문 찾기
@@ -70,7 +70,7 @@ public class DiffuserProcessingCheckController {
                     System.out.println("this is Manager authority find All Complete diffuser request " + diffuserProductRequest.getName());
                 }
             }
-            return "authority/authorityPage";
+            return "authorizationPage";
         }
     }
 }

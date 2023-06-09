@@ -24,6 +24,15 @@ public class CustomerController {
 
     private final ProcessingRequestService processingRequestService;
 
+
+    @GetMapping("/customer")
+    public String customers (Model model) {
+        List<Customer> customers = customerService.findAllCustomer();
+        model.addAttribute("customers", customers);
+        return "customer/customerList";
+    }
+
+
     @GetMapping("{id}/main")
     public String main (@PathVariable("id") Long id) {
         List<Customer> customers = customerService.findAllCustomer();

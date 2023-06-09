@@ -41,7 +41,7 @@ public class perfumeProcessingCheckController {
             for(PerfumeProductRequest perfumeProductRequestComplete : completeProductRequestsComplete) {
                 System.out.println("customer name = " + customer + " and your complete perfume is " + perfumeProductRequestComplete.getName());
             }
-            return "authority/authorityPage";
+            return "authorizationPage";
         } else {
 
             // 매니저 권한으로 모든 주문 찾기
@@ -67,7 +67,7 @@ public class perfumeProcessingCheckController {
                     System.out.println("this is Manager authority find All Complete perfume request " + perfumeProductRequest.getName());
                 }
             }
-            return "authority/authorityPage";
+            return "authorizationPage";
         }
     }
 }

@@ -32,6 +32,7 @@ public class CustomerService {
         customer.setAddress(address);
         customer.setAuth(customerDto.getAuth());
 
+        validateDuplicateCustomer(customer);
         customerRepository.save(customer);
         return customer.getId();
     }
@@ -44,5 +45,12 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
+    // 동일 이름 예외 처리
+    public void validateDuplicateCustomer(Customer customer) {
+        List<Customer> customers = customerRepository.findByName(customer.getName());
+        if (!customers.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
+    }
 
 }

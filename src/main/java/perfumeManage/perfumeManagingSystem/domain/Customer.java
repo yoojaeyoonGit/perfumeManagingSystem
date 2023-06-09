@@ -1,6 +1,7 @@
 package perfumeManage.perfumeManagingSystem.domain;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Entity
 @Getter @Setter
 public class Customer {

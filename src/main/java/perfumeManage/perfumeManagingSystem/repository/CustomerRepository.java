@@ -24,4 +24,11 @@ public class CustomerRepository {
                 .getResultList();
         //SQL은 테이블에 대상으로 쿼리하는데 JPQL은 엔티티 객체를 대상으로 쿼리한다.
     }
+
+
+    public List<Customer> findByName(String name){
+        return em.createQuery("select m from Customer m where m.name = :name", Customer.class)
+                .setParameter("name",name)
+                .getResultList();
+    }
 }
