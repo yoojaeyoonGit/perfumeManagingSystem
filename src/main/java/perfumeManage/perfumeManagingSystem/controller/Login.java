@@ -67,6 +67,6 @@ public class Login {
             if(session != null) {
                 session.invalidate();
             }
-            return "redirect:/login";
+            return "main/home2";
     }
 }

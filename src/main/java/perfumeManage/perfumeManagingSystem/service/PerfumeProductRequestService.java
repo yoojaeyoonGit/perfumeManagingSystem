@@ -42,9 +42,8 @@ public class PerfumeProductRequestService {
         perfumeProductRequestRepository.save(perfumeProductRequest);
     }
 
-        @Transactional
-        public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect
-        perfumeRequestStatusDetect) {
+    @Transactional
+    public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
             System.out.println("this is Perfume name : " + perfumeProductRequest.getName());
             System.out.println("this is status : " + perfumeRequestStatusDetect.getStatus());
 

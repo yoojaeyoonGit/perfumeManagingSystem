@@ -43,7 +43,8 @@ public class HomeController {
                     Long customerId = loggedInCustomer.getId();
                     Customer customer = customerService.findCustomer(customerId);
 //
-                    model.addAttribute("customer", customer);
+                    model.addAttribute( "customer", customer);
+                    System.out.println("얘는 계정 주야 " + customer);
 
                     return "home";
 //                }
