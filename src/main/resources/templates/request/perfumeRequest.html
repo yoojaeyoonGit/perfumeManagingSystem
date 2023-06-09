@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
 <body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" th:action="@{/{id}/perfumeProductRequest (id = ${loginCustomer.id})}" th:object="${perfumeRequest}" method="post">
+        <h3>상품 정보</h3>
+        <div class="form-group">
+            <label th:for="name">상품명</label>
+            <input type="text" th:field="*{name}" class="form-control"
+                   placeholder="상품명 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="recipe">제조 비율</label>
+            <input type="text" th:field="*{recipe}" class="form-control"
+                   placeholder="제조 비율을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="amount">수량</label>
+            <input type="text" th:field="*{amount}" class="form-control"
+                   placeholder="수량을 입력하세요">
+        </div>
+        <br>
+        <br>
 
+        <h3>제조 기한일</h3>
+        <!--        <br>-->
+        <div class="form-group">
+            <label th:for="year">년</label>
+            <input type="text" th:field="*{year}" class="form-control"
+                   placeholder="년">
+        </div>
+        <div class="form-group">
+            <label th:for="month">월</label>
+            <input type="text" th:field="*{month}" class="form-control"
+                   placeholder="월">
+        </div>
+        <div class="form-group">
+            <label th:for="date">일</label>
+            <input type="text" th:field="*{date}" class="form-control"
+                   placeholder="일">
+        </div>
+
+        <br>
+        <h3>사진</h3>
+        <!--        <br>-->
+        <div class="form-group">
+            <label th:for="image">사진</label>
+            <input type="text" th:field="*{image}" class="form-control"
+                   placeholder="사진 주소를 입력하세요">
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
 </body>
 </html>

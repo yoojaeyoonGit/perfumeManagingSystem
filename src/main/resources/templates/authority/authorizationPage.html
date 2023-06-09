@@ -5,6 +5,10 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <form role="form" th:action="@{/{id}/auth (id = ${customer.id})}"  th:object="${AuthorityTest}" method="POST" >
+        <div class="form-group" style="margin-bottom: 35px;">
+            <span>you are </span>
+            <h3 th:utext="${customer.auth} "></h3>
+        </div>
         <div class="form-group">
             <label for="authorization">매니저 권한 요청</label>
             <textarea class="form-control" th:field="*{answer}" id="authorization" placeholder="매니저 권한 요청 값 입력" rows="3"></textarea>
@@ -12,6 +16,7 @@
 <!--        I Want Manager Authority-->
         <button type="submit" class="btn btn-primary" style="margin-top: 20px;">submit</button>
     </form>
+    <br>
     <div th:replace="fragments/footer :: footer" />
 </div>
 </body>

@@ -31,22 +31,22 @@ public class HomeController {
             } else {
 
                 HttpSession session = httpServletRequest.getSession(false);
-                System.out.println();
-                if (session == null) {
-                    return "redirect:/login";
-                }
-
-                if (session.getAttribute(SessionConst.LOGIN_CUSTOMER) == null) {
-                    return "redirect:/login";
-                } else {
+//                System.out.println();
+//                if (session == null) {
+//                    return "redirect:/login";
+//                }
+//
+//                if (session.getAttribute(SessionConst.LOGIN_CUSTOMER) == null) {
+//                    return "redirect:/login";
+//                } else {
                     Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
                     Long customerId = loggedInCustomer.getId();
                     Customer customer = customerService.findCustomer(customerId);
 //
-                    model.addAttribute(customer);
+                    model.addAttribute("customer", customer);
 
                     return "home";
-                }
+//                }
             }
         } catch (Exception e) {
             e.getStackTrace();

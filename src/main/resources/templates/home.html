@@ -4,6 +4,11 @@
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+<style>
+    .hidden {
+        display : none;
+    }
+</style>
 <body>
 <div class="container" th:object="${customer}" >
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
@@ -11,16 +16,19 @@
         <h1>HELLO SHOP</h1>
         <p class="lead">회원 기능</p>
         <p>
-            <a class="btn btn-lg btn-secondary" href="/customer/new">회원 가입</a>
+            <a id="signUp" class="btn btn-lg btn-secondary" href="/customer/new">회원 가입</a>
+            <a id="login" class="btn btn-lg btn-secondary" href="/login">로그인</a>
+            <a id="logout" class="btn btn-lg btn-secondary" href="/logout">로그아웃</a>
             <a class="btn btn-lg btn-secondary" href="/customer">회원 목록</a>
             <a class="btn btn-lg btn-secondary" th:href="@{/{id}/auth (id=${customer.id})}">회원 권한 변경</a>
         </p>
-        <p class="lead">상품 기능</p>
+        <p class="lead">상품 제조 주문</p>
         <p>
-            <a class="btn btn-lg btn-dark" href="/items/new">상품 등록</a>
+            <a class="btn btn-lg btn-dark" th:href="@{/{id}/diffuserProductRequest (id=${customer.id})}">디퓨저 제조 주문</a>
+            <a class="btn btn-lg btn-dark" th:href="@{/{id}/perfumeProductRequest (id=${customer.id})}">향수 제조 주문</a>
             <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>
         </p>
-        <p class="lead">주문 기능</p>
+        <p class="lead">주문 확인 기능</p>
         <p>
             <a class="btn btn-lg btn-info" href="/order">상품 주문</a>
             <a class="btn btn-lg btn-info" href="/orders">주문 내역</a>
@@ -41,4 +49,24 @@
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
+<script  th:inline="javascript">
+        const login = document.getElementById("login");
+        const logout = document.getElementById("logout");
+    /* <![CDATA[ */
+        const customer = [[${customer}]];
+    /* ]]> */
+        window.onload=function(){
+            //실행할 내용
+            if (customer === null) {
+                logout.classList.add('hidden');
+                login.classList.remove('hidden');
+
+            } else {
+                logout.classList.remove('hidden');
+                login.classList.add('hidden');
+            }
+        }
+
+
+</script>
 </html>

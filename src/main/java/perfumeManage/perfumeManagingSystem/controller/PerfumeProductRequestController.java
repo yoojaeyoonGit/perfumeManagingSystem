@@ -2,15 +2,20 @@ package perfumeManage.perfumeManagingSystem.controller;
 
         import lombok.RequiredArgsConstructor;
         import org.springframework.stereotype.Controller;
+        import org.springframework.ui.Model;
         import org.springframework.web.bind.annotation.*;
+        import perfumeManage.perfumeManagingSystem.SessionConst;
         import perfumeManage.perfumeManagingSystem.domain.Customer;
         import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
+        import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
         import perfumeManage.perfumeManagingSystem.service.CustomerService;
         import perfumeManage.perfumeManagingSystem.service.PerfumeProductRequestService;
 
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpSession;
         import java.util.List;
 
 @Controller
@@ -19,21 +24,32 @@ public class PerfumeProductRequestController {
 
     private final PerfumeProductRequestService perfumeProductRequestService;
     private final CustomerService customerService;
-    @GetMapping("{id}/perfumeProduct")
-    public String hello(@PathVariable("id") Long id) {
-        Customer customer = customerService.findCustomer(id);
-        List<PerfumeProductRequest> perfumeRequests = customer.getPerfumeRequests();
-        for (PerfumeProductRequest perfumeProductRequest : perfumeRequests) {
-            System.out.println(perfumeProductRequest.getName() + " This is perfume name " + " for " + customer.getName());
-        }
-        return "red";
-    }
 
     @PostMapping("{id}/perfumeProduct")
     public String PerfumeRequest(@PathVariable("id") Long id, @RequestBody PerfumeRequestDto perfumeRequestDto) {
         Customer customer = customerService.findCustomer(id);
         perfumeProductRequestService.savePerfumeProductRequest(customer, perfumeRequestDto);
         return "request/perfumeRequest";
+    }
+
+    @GetMapping("/{id}/perfumeProductRequest")
+    public String PerfumeProductRequest(@PathVariable ("id")Long id, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if(session == null) {
+            return "redirect:/members/new";
+        }
+
+        Customer loginmCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
+        model.addAttribute("loginCustomer", loginmCustomer);
+        model.addAttribute("perfumeRequest", new PerfumeRequestDto());
+        return "request/perfumeRequest";
+    }
+
+    @PostMapping("{id}/perfumeProductRequest")
+    public String PerfumeProductRequest(@PathVariable("id") Long id, PerfumeRequestDto perfumeRequestDto) {
+        Customer customer = customerService.findCustomer(id);
+        perfumeProductRequestService.savePerfumeProductRequest(customer, perfumeRequestDto);
+        return "redirect:/";
     }
 
 
