@@ -1,15 +1,16 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="fragments/header :: header" />
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-  <div>
     <h3> 제조 완료된 향수 </h3>
     <table class="table table-striped">
       <thead>
       <tr>
         <th>#</th>
+        <th>이미지</th>
         <th>상품명</th>
         <th>고객명</th>
         <th>진행상태</th>
@@ -20,6 +21,7 @@
       <tbody>
         <tr th:each="perfume : ${perfumeProductRequests}">
           <td th:text="${perfume.id}"></td>
+          <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
           <td th:text="${perfume.name}"></td>
           <td th:text="${perfume.customer.name}"></td>
           <td th:text="${perfume.status}"></td>
@@ -38,6 +40,7 @@
         <thead>
         <tr>
           <th>#</th>
+          <th>이미지</th>
           <th>상품명</th>
           <th>고객명</th>
           <th>진행상태</th>
@@ -50,6 +53,7 @@
         <tbody>
           <tr th:each="perfume : ${perfumeProductProcessingRequests}">
             <td th:text="${perfume.id}"></td>
+            <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
             <td th:text="${perfume.name}"></td>
             <td th:text="${perfume.customer.name}"></td>
             <td th:text="${perfume.status}"></td>
@@ -67,30 +71,32 @@
 
     <table  class="table table-striped">
       <div>
-      <thead style="margin-top : 30px;">
-      <tr>
-        <th>#</th>
-        <th>상품명</th>
-        <th>고객명</th>
-        <th>진행상태</th>
-        <th>마감기한</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-        <h3> 제조 완료된 향수 </h3>
-        <tr th:each="perfume : ${perfumeProductCompleteRequests}">
-          <td th:text="${perfume.id}"></td>
-          <td th:text="${perfume.name}"></td>
-          <td th:text="${perfume.customer.name}"></td>
-          <td th:text="${perfume.status}"></td>
-          <td th:text="${perfume.deadline}"></td>
-          <!--        <td>-->
-          <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
-          <!--             class="btn btn-primary" role="button">수정</a>-->
-          <!--        </td>-->
-        </tr>
-      </tbody>
+        <thead style="margin-top : 30px;">
+          <tr>
+            <th>#</th>
+            <th>이미지</th>
+            <th>상품명</th>
+            <th>고객명</th>
+            <th>진행상태</th>
+            <th>마감기한</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <h3 > 제조 완료된 향수 </h3>
+          <tr th:each="perfume : ${perfumeProductCompleteRequests}">
+              <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
+              <td th:text="${perfume.name}"></td>
+              <td th:text="${perfume.customer.name}"></td>
+              <td th:text="${perfume.status}"></td>
+              <td th:text="${perfume.deadline}"></td>
+            <!--        <td>-->
+            <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
+            <!--             class="btn btn-primary" role="button">수정</a>-->
+            <!--        </td>-->
+          </tr>
+        </tbody>
+        </div>
     </table>
   </div>
   <div th:replace="fragments/footer :: footer"/>

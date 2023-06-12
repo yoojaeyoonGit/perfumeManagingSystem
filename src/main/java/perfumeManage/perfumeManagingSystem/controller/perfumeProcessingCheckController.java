@@ -8,6 +8,7 @@ package perfumeManage.perfumeManagingSystem.controller;
         import perfumeManage.perfumeManagingSystem.domain.*;
         import perfumeManage.perfumeManagingSystem.service.*;
 
+        import java.util.ArrayList;
         import java.util.List;
 
 @Controller
@@ -58,59 +59,42 @@ public class perfumeProcessingCheckController {
             List<PerfumeProductRequest> perfumeProductRequests = perfumeProductRequestService.findAllPerfumeProductRequest();
             model.addAttribute("perfumeProductRequests", perfumeProductRequests);
 
-//          for(PerfumeProductRequest perfumeProductRequest : perfumeProductRequests) {
-//              System.out.println("this is Manager authority find All perfume request " + perfumeProductRequest.getName());
-//          }
 
             // 여기가 해답
-            Long getProcessingRequestId = customer.getProcessingRequest().getId();
-            ProcessingRequest  processingRequestReady = processingRequestService.findProcessingRequest(getProcessingRequestId);
-            List<PerfumeProductRequest>  perfumeProductProcessingRequests = processingRequestReady.getPerfumeProductRequests();
-            model.addAttribute("perfumeProductProcessingRequests", perfumeProductProcessingRequests);
+//            Long getProcessingRequestId = customer.getProcessingRequest().getId();
+//            ProcessingRequest  processingRequestReady = processingRequestService.findProcessingRequest(getProcessingRequestId);
+//            List<PerfumeProductRequest>  perfumeProductProcessingRequests = processingRequestReady.getPerfumeProductRequests();
+//            model.addAttribute("perfumeProductProcessingRequests", perfumeProductProcessingRequests);
+
 
 
             // 매니저 권한으로 진행중인 주문 찾기
             List<ProcessingRequest> perfumeProductProcessingRequestReady = processingRequestService.findAllProcessingRequest();
+            List<PerfumeProductRequest> perfumeProductProcessingRequests = new ArrayList<>();
+
+            for (ProcessingRequest processingPerfume1 : perfumeProductProcessingRequestReady) {
+                List<PerfumeProductRequest> processingPerfume2 = processingPerfume1.getPerfumeProductRequests();
+                for (PerfumeProductRequest processingPerfume3 : processingPerfume2) {
+                    perfumeProductProcessingRequests.add(processingPerfume3);
+                }
+            }
+            model.addAttribute("perfumeProductProcessingRequests", perfumeProductProcessingRequests);
             // 얘를 왜 리스트로? 어차피 ProcessingRequest는 하나인데 생각해보니 진행중인 주문 객체는 하나니까 하나만 찾아서 리스트 model.addAtt.. 해주면됨 위에 그 해답이 있음
 
 
-
-
-    //        for (ProcessingRequest processingRequest : perfumeProductProcessingRequestReady) {
-    //            List<PerfumeProductRequest> perfumeProductProcessingRequests =  processingRequest.getPerfumeProductRequests();
-    //            model.addAttribute("perfumeProductProcessingRequests", perfumeProductProcessingRequests);
-    //        }
-    //
-//
-//            for (PerfumeProductRequest perfumeProductRequest : perfumeProductProcessingRequestsNow) {
-//                System.out.println("this is Manager authority find All processing perfume request " + perfumeProductRequest.getName());
-//            }
-
-
-
-
-
             // 매니저 권한으로 완성된 주문 찾기
-            Long getCompleteRequestId = customer.getCompleteRequest().getId();
-            CompleteRequest completeRequestReady = completeRequestService.findCompleteRequest(getCompleteRequestId);
-            List<PerfumeProductRequest>  perfumeProductCompleteRequests = completeRequestReady.getPerfumeProductRequests();
+            List<CompleteRequest> perfumeProductCompleteRequestsReady = completeRequestService.findAllCompleteRequests();
+            List<PerfumeProductRequest> perfumeProductCompleteRequests = new ArrayList<>();
+
+            for (CompleteRequest completePerfume : perfumeProductCompleteRequestsReady) {
+                List<PerfumeProductRequest> completedPerfume = completePerfume.getPerfumeProductRequests();
+                for (PerfumeProductRequest completePerfumeRequest : completedPerfume) {
+                    perfumeProductCompleteRequests.add(completePerfumeRequest);
+                }
+            }
+
             model.addAttribute("perfumeProductCompleteRequests", perfumeProductCompleteRequests);
-
-
-//        List<CompleteRequest> perfumeProductCompleteRequestsReady = completeRequestService.findAllCompleteRequests();
-//        model.addAttribute("perfumeProductCompleteRequestsReady", perfumeProductCompleteRequestsReady);
-//        for (CompleteRequest completeRequest : perfumeProductCompleteRequestsReady) {
-//            List<PerfumeProductRequest> perfumeProductCompletedRequests = completeRequest.getPerfumeProductRequests();
-//            model.addAttribute("perfumeProductCompletedRequests", perfumeProductCompletedRequests);
-//        }
-
-
-
-//            for (PerfumeProductRequest perfumeProductRequest : perfumeProductCompletedRequests) {
-//                System.out.println("this is Manager authority find All Complete perfume request " + perfumeProductRequest.getName());
-//            }
-//        }
-        return "requestList/perfumeList";
+            return "requestList/perfumeList";
     }
     }
 }
