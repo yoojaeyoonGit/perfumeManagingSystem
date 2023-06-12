@@ -44,9 +44,6 @@ public class PerfumeProductRequestService {
 
     @Transactional
     public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
-            System.out.println("this is Perfume name : " + perfumeProductRequest.getName());
-            System.out.println("this is status : " + perfumeRequestStatusDetect.getStatus());
-
             perfumeProductRequest.setStatus(perfumeRequestStatusDetect.getStatus());
 
             Customer customer = perfumeProductRequest.getCustomer();
@@ -63,8 +60,7 @@ public class PerfumeProductRequestService {
         }
 
     @Transactional
-    public void changePerfumeProductRequestStatusToComplete(ProcessingRequest processingRequest, PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect perfumeRequestStatusDetect ) {
-            perfumeProductRequest.setStatus(perfumeRequestStatusDetect.getStatus());
+    public void changePerfumeProductRequestStatusToComplete(ProcessingRequest processingRequest, PerfumeProductRequest perfumeProductRequest) {
 
             Customer customer = perfumeProductRequest.getCustomer();
             CompleteRequest completeRequest = customer.getCompleteRequest();
@@ -76,12 +72,6 @@ public class PerfumeProductRequestService {
             }
 
             List<PerfumeProductRequest> processingPerfumes = processingRequest.getPerfumeProductRequests();
-    //        for(DiffuserProductRequest processingDiffuser : processingDiffusers) {
-    //            if (diffuserProductRequest == processingDiffuser) {
-    //                processingDiffuser.setProcessingRequest(null);
-    //                processingDiffusers.remove(processingDiffuser);
-    //            }
-    //        }
 
             for (int i = 0; i < processingPerfumes.size(); i++) {
                 if (perfumeProductRequest == processingPerfumes.get(i)) {

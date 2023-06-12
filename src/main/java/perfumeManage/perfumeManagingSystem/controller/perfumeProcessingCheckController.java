@@ -5,6 +5,7 @@ package perfumeManage.perfumeManagingSystem.controller;
         import org.springframework.ui.Model;
         import org.springframework.web.bind.annotation.GetMapping;
         import org.springframework.web.bind.annotation.PathVariable;
+        import org.springframework.web.bind.annotation.PostMapping;
         import perfumeManage.perfumeManagingSystem.domain.*;
         import perfumeManage.perfumeManagingSystem.service.*;
 
@@ -26,32 +27,21 @@ public class perfumeProcessingCheckController {
     public String checkAllProcessingPerfume(@PathVariable("id") Long customerId, Model model) {
         Customer customer = customerService.findCustomer(customerId);
 
-
         // General 권한의 멤버의 진행 중인 주문
         if (customer.getAuth() == Auth.General) {
             // 요청된 모든 주문
             List<PerfumeProductRequest> perfumeProductRequests = customer.getPerfumeRequests();
             model.addAttribute("perfumeProductRequests", perfumeProductRequests);
 
-//            for(PerfumeProductRequest perfumeProductRequest : perfumeProductRequests) {
-//                System.out.println(perfumeProductRequest.getName());
-//            }
-
             // 진행 증인 주문
             List<PerfumeProductRequest> perfumeProductProcessingRequests = customer.getProcessingRequest().getPerfumeProductRequests();
             model.addAttribute("perfumeProductProcessingRequests", perfumeProductProcessingRequests);
 
-//            for(PerfumeProductRequest perfumeProductRequestProcessing : perfumeProductRequestsProcessing) {
-//                System.out.println("customer name = " + customer + " and your processing perfume is " + perfumeProductRequestProcessing.getName());
-//            }
 
             // 완료 된 주문
             List<PerfumeProductRequest> perfumeProductCompleteRequests = customer.getCompleteRequest().getPerfumeProductRequests();
             model.addAttribute("perfumeProductCompleteRequests", perfumeProductCompleteRequests);
 
-//            for(PerfumeProductRequest perfumeProductRequestComplete : completeProductRequestsComplete) {
-//                System.out.println("customer name = " + customer + " and your complete perfume is " + perfumeProductRequestComplete.getName());
-//            }
             return "requestList/perfumeList";
         } else {
 
@@ -95,7 +85,7 @@ public class perfumeProcessingCheckController {
 
             model.addAttribute("perfumeProductCompleteRequests", perfumeProductCompleteRequests);
             return "requestList/perfumeList";
-    }
+        }
     }
 }
 

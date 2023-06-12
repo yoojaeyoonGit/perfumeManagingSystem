@@ -8,6 +8,7 @@ package perfumeManage.perfumeManagingSystem.controller;
         import perfumeManage.perfumeManagingSystem.domain.Customer;
         import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
         import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
+        import perfumeManage.perfumeManagingSystem.domain.ProductionStatus;
         import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestDto;
         import perfumeManage.perfumeManagingSystem.dto.PerfumeRequestStatusDetect;
@@ -54,22 +55,23 @@ public class PerfumeProductRequestController {
 
 
 
-    @PutMapping ("{id}/perfumeProductionProcessing")
+    @PostMapping ("{id}/perfumeProductionProcessing")
     public String ChangePerfumeRequestStatusToProcessing(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
         PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
         perfumeProductRequestService.ChangePerfumeProductRequestStatusToProcessing(perfumeProductRequest, perfumeRequestStatusDetect);
         return "request/diffuserRequest";
     }
 
-    @PutMapping("{id}/perfumeProductionComplete")
-    public String ChangPerfumeRequestStatusToComplete(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
+    @PostMapping("{id}/perfumeProductionComplete")
+    public String ChangPerfumeRequestStatusToComplete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         try {
-
             PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
+            perfumeProductRequest.setStatus(ProductionStatus.COMPLETE);
 
             ProcessingRequest processingRequest = perfumeProductRequest.getProcessingRequest();
-            perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest, perfumeRequestStatusDetect);
-            return "request/diffuserRequest";
+            perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest);
+
+            return "redirect:/{id}/checkAll/perfume";
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("hello error :" + e);

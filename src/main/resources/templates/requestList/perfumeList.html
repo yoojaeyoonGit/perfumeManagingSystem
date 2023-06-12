@@ -3,40 +3,10 @@
 
 <head th:replace="fragments/header :: header" />
 <body>
-<div class="container">
-  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-    <h3> 제조 완료된 향수 </h3>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>이미지</th>
-        <th>상품명</th>
-        <th>고객명</th>
-        <th>진행상태</th>
-        <th>마감기한</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr th:each="perfume : ${perfumeProductRequests}">
-          <td th:text="${perfume.id}"></td>
-          <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
-          <td th:text="${perfume.name}"></td>
-          <td th:text="${perfume.customer.name}"></td>
-          <td th:text="${perfume.status}"></td>
-          <td th:text="${perfume.deadline}"></td>
-  <!--        <td>-->
-  <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
-  <!--             class="btn btn-primary" role="button">수정</a>-->
-  <!--        </td>-->
-        </tr>
-      </tbody>
-
-    </table>
-
-    <table  class="table table-striped">
-      <div>
+  <div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+      <h3> 전체 주문 확인 </h3>
+      <table class="table table-striped">
         <thead>
         <tr>
           <th>#</th>
@@ -48,30 +18,26 @@
           <th></th>
         </tr>
         </thead>
-        <br>
-        <h3> 진행중인 향수 </h3>
         <tbody>
-          <tr th:each="perfume : ${perfumeProductProcessingRequests}">
+          <tr th:each="perfume : ${perfumeProductRequests}">
             <td th:text="${perfume.id}"></td>
             <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
             <td th:text="${perfume.name}"></td>
             <td th:text="${perfume.customer.name}"></td>
             <td th:text="${perfume.status}"></td>
             <td th:text="${perfume.deadline}"></td>
-            <!--        <td>-->
-            <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
-            <!--             class="btn btn-primary" role="button">수정</a>-->
-            <!--        </td>-->
+    <!--        <td>-->
+    <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
+    <!--             class="btn btn-primary" role="button">수정</a>-->
+    <!--        </td>-->
           </tr>
         </tbody>
-      </div>
-    </table>
 
-      <br>
+      </table>
 
-    <table  class="table table-striped">
-      <div>
-        <thead style="margin-top : 30px;">
+      <table  class="table table-striped">
+        <div>
+          <thead>
           <tr>
             <th>#</th>
             <th>이미지</th>
@@ -79,27 +45,72 @@
             <th>고객명</th>
             <th>진행상태</th>
             <th>마감기한</th>
-            <th></th>
+            <th>상태변경</th>
           </tr>
-        </thead>
-        <tbody>
-          <h3 > 제조 완료된 향수 </h3>
-          <tr th:each="perfume : ${perfumeProductCompleteRequests}">
+          </thead>
+          <br>
+          <h3> 진행중인 향수 </h3>
+          <tbody>
+            <tr th:each="perfume : ${perfumeProductProcessingRequests}">
+              <td th:text="${perfume.id}"></td>
               <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
               <td th:text="${perfume.name}"></td>
               <td th:text="${perfume.customer.name}"></td>
               <td th:text="${perfume.status}"></td>
               <td th:text="${perfume.deadline}"></td>
-            <!--        <td>-->
-            <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
-            <!--             class="btn btn-primary" role="button">수정</a>-->
-            <!--        </td>-->
-          </tr>
-        </tbody>
+              <td>
+                <a
+                        th:if="${perfume.status.name() == 'PROCESSING'}"
+                     href="#" th:href="'javascript:complete('+${perfume.id}+')'"
+                     class="btn btn-primary" role="button">완료
+                </a>
+              </td>
+
+            </tr>
+          </tbody>
         </div>
-    </table>
-  </div>
-  <div th:replace="fragments/footer :: footer"/>
-</div> <!-- /container -->
+      </table>
+
+        <br>
+
+      <table  class="table table-striped">
+        <div>
+          <thead style="margin-top : 30px;">
+            <tr>
+              <th>#</th>
+              <th>이미지</th>
+              <th>상품명</th>
+              <th>고객명</th>
+              <th>진행상태</th>
+              <th>마감기한</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <h3 > 제조 완료된 향수 </h3>
+            <tr th:each="perfume : ${perfumeProductCompleteRequests}">
+                <td th:text="${perfume.id}"></td>
+                <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
+                <td th:text="${perfume.name}"></td>
+                <td th:text="${perfume.customer.name}"></td>
+                <td th:text="${perfume.status}"></td>
+                <td th:text="${perfume.deadline}"></td>
+
+            </tr>
+          </tbody>
+          </div>
+      </table>
+    <div th:replace="fragments/footer :: footer"/>
+    </div>
+  </div> <!-- /container -->
+  <script>
+    function complete(itemId) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action", "/" + itemId + "/perfumeProductionComplete");
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
 </body>
 </html>
