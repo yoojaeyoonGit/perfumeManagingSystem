@@ -62,20 +62,21 @@ public class PerfumeProductRequestController {
         return "request/diffuserRequest";
     }
 
-    @PostMapping("{id}/perfumeProductionComplete")
-    public String ChangPerfumeRequestStatusToComplete(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+    @PostMapping("{customerId}/{id}/perfumeProductionComplete")
+    public String ChangPerfumeRequestStatusToComplete(@PathVariable("id") Long id, @PathVariable("customerId") Long customerId, HttpServletRequest httpServletRequest) {
         try {
+
             PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
             perfumeProductRequest.setStatus(ProductionStatus.COMPLETE);
 
             ProcessingRequest processingRequest = perfumeProductRequest.getProcessingRequest();
             perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest);
 
-            return "redirect:/{id}/checkAll/perfume";
+            return "redirect:/{customerId}/checkAll/perfume";
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("hello error :" + e);
-            return "red";
+            return "redirect:/{customerId}/checkAll/perfume";
         }
     }
 }

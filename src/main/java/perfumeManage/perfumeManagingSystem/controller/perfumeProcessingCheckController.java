@@ -5,10 +5,10 @@ package perfumeManage.perfumeManagingSystem.controller;
         import org.springframework.ui.Model;
         import org.springframework.web.bind.annotation.GetMapping;
         import org.springframework.web.bind.annotation.PathVariable;
-        import org.springframework.web.bind.annotation.PostMapping;
         import perfumeManage.perfumeManagingSystem.domain.*;
         import perfumeManage.perfumeManagingSystem.service.*;
 
+        import javax.servlet.http.HttpServletRequest;
         import java.util.ArrayList;
         import java.util.List;
 
@@ -24,8 +24,9 @@ public class perfumeProcessingCheckController {
 
 
     @GetMapping("{id}/checkAll/perfume")
-    public String checkAllProcessingPerfume(@PathVariable("id") Long customerId, Model model) {
+    public String checkAllProcessingPerfume(@PathVariable("id") Long customerId, Model model, HttpServletRequest httpServletRequest) {
         Customer customer = customerService.findCustomer(customerId);
+        model.addAttribute(customer);
 
         // General 권한의 멤버의 진행 중인 주문
         if (customer.getAuth() == Auth.General) {

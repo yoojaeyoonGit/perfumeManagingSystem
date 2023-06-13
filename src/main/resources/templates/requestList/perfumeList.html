@@ -3,7 +3,7 @@
 
 <head th:replace="fragments/header :: header" />
 <body>
-  <div class="container">
+  <div class="container" th:object="${customer}">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
       <h3> 전체 주문 확인 </h3>
       <table class="table table-striped">
@@ -49,7 +49,7 @@
           </tr>
           </thead>
           <br>
-          <h3> 진행중인 향수 </h3>
+          <h3> 제조 진행중인 주문 </h3>
           <tbody>
             <tr th:each="perfume : ${perfumeProductProcessingRequests}">
               <td th:text="${perfume.id}"></td>
@@ -61,7 +61,7 @@
               <td>
                 <a
                         th:if="${perfume.status.name() == 'PROCESSING'}"
-                     href="#" th:href="'javascript:complete('+${perfume.id}+')'"
+                     href="#" th:href="'javascript:complete('+${perfume.id}+', '+${customer.id}+')'"
                      class="btn btn-primary" role="button">완료
                 </a>
               </td>
@@ -70,7 +70,6 @@
           </tbody>
         </div>
       </table>
-
         <br>
 
       <table  class="table table-striped">
@@ -83,11 +82,10 @@
               <th>고객명</th>
               <th>진행상태</th>
               <th>마감기한</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
-            <h3 > 제조 완료된 향수 </h3>
+            <h3 > 제조 완료된 주문 </h3>
             <tr th:each="perfume : ${perfumeProductCompleteRequests}">
                 <td th:text="${perfume.id}"></td>
                 <td><img th:src="${perfume.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
@@ -95,7 +93,6 @@
                 <td th:text="${perfume.customer.name}"></td>
                 <td th:text="${perfume.status}"></td>
                 <td th:text="${perfume.deadline}"></td>
-
             </tr>
           </tbody>
           </div>
@@ -104,10 +101,10 @@
     </div>
   </div> <!-- /container -->
   <script>
-    function complete(itemId) {
+    function complete(itemId, customerId) {
       var form = document.createElement("form");
       form.setAttribute("method", "POST");
-      form.setAttribute("action", "/" + itemId + "/perfumeProductionComplete");
+      form.setAttribute("action","/" + customerId +  "/" + itemId + "/perfumeProductionComplete");
       document.body.appendChild(form);
       form.submit();
     }
