@@ -55,11 +55,13 @@ public class PerfumeProductRequestController {
 
 
 
-    @PostMapping ("{id}/perfumeProductionProcessing")
-    public String ChangePerfumeRequestStatusToProcessing(@PathVariable("id") Long id, @RequestBody PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
+    @PostMapping ("{customerId}/{itemId}/perfumeProductionProcessing")
+    public String ChangePerfumeRequestStatusToProcessing(@PathVariable("itemId") Long id, @PathVariable("customerId") Long customerId) {
         PerfumeProductRequest perfumeProductRequest = perfumeProductRequestService.find(id);
-        perfumeProductRequestService.ChangePerfumeProductRequestStatusToProcessing(perfumeProductRequest, perfumeRequestStatusDetect);
-        return "request/diffuserRequest";
+        perfumeProductRequest.setStatus(ProductionStatus.PROCESSING);
+
+        perfumeProductRequestService.ChangePerfumeProductRequestStatusToProcessing(perfumeProductRequest);
+        return "redirect:/{customerId}/checkAll/perfume";
     }
 
     @PostMapping("{customerId}/{id}/perfumeProductionComplete")
@@ -72,11 +74,11 @@ public class PerfumeProductRequestController {
             ProcessingRequest processingRequest = perfumeProductRequest.getProcessingRequest();
             perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest);
 
+
             return "redirect:/{customerId}/checkAll/perfume";
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("hello error :" + e);
-            return "redirect:/{customerId}/checkAll/perfume";
+            return "redirect:/";
         }
     }
 }

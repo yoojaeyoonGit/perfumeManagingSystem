@@ -43,9 +43,7 @@ public class PerfumeProductRequestService {
     }
 
     @Transactional
-    public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest, PerfumeRequestStatusDetect perfumeRequestStatusDetect) {
-            perfumeProductRequest.setStatus(perfumeRequestStatusDetect.getStatus());
-
+    public void ChangePerfumeProductRequestStatusToProcessing(PerfumeProductRequest perfumeProductRequest) {
             Customer customer = perfumeProductRequest.getCustomer();
             ProcessingRequest processingRequest = customer.getProcessingRequest();
 

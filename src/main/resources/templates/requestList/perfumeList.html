@@ -26,10 +26,13 @@
             <td th:text="${perfume.customer.name}"></td>
             <td th:text="${perfume.status}"></td>
             <td th:text="${perfume.deadline}"></td>
-    <!--        <td>-->
-    <!--          <a href="#" th:href="@{/items/{id}/edit (id=${perfume.id})}"-->
-    <!--             class="btn btn-primary" role="button">수정</a>-->
-    <!--        </td>-->
+            <td>
+              <a
+                    th:if="${perfume.status.name() == 'REQUEST'}"
+                    href="#" th:href="'javascript:process('+${perfume.id}+', '+${customer.id}+')'"
+                    class="btn btn-primary" role="button">제조 승인
+              </a>
+            </td>
           </tr>
         </tbody>
 
@@ -62,7 +65,7 @@
                 <a
                         th:if="${perfume.status.name() == 'PROCESSING'}"
                      href="#" th:href="'javascript:complete('+${perfume.id}+', '+${customer.id}+')'"
-                     class="btn btn-primary" role="button">완료
+                     class="btn btn-primary" role="button">제조 완료
                 </a>
               </td>
 
@@ -101,6 +104,14 @@
     </div>
   </div> <!-- /container -->
   <script>
+    function process(itemId, customerId) {
+      var form = document.createElement("form");
+      form.setAttribute("method", "POST");
+      form.setAttribute("action","/" + customerId +  "/" + itemId + "/perfumeProductionProcessing");
+      document.body.appendChild(form);
+      form.submit();
+    }
+
     function complete(itemId, customerId) {
       var form = document.createElement("form");
       form.setAttribute("method", "POST");
@@ -108,6 +119,8 @@
       document.body.appendChild(form);
       form.submit();
     }
+
+
   </script>
 </body>
 </html>
