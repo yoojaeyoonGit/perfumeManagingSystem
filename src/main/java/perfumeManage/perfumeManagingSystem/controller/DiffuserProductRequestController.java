@@ -8,6 +8,7 @@ import perfumeManage.perfumeManagingSystem.SessionConst;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
+import perfumeManage.perfumeManagingSystem.domain.ProductionStatus;
 import perfumeManage.perfumeManagingSystem.dto.CustomerDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
@@ -43,22 +44,24 @@ public class DiffuserProductRequestController {
         return "redirect:/";
     }
 
-    @PutMapping("{id}/diffuserProductionProcessing")
-    public String ChangeDiffuserRequestStatusToProcessing(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+    @PostMapping("{customerId}/{id}/diffuserProductionProcessing")
+    public String ChangeDiffuserRequestStatusToProcessing(@PathVariable("id") Long id,  @PathVariable("customerId") Long customerId) {
         DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
-        diffuserProductRequestService.changeDiffuserProductRequestStatusToProcessing(diffuserProductRequest, diffuserRequestStatusDetect);
-        return "request/diffuserRequest";
+        diffuserProductRequest.setStatus(ProductionStatus.PROCESSING);
+        diffuserProductRequestService.changeDiffuserProductRequestStatusToProcessing(diffuserProductRequest);
+        return "redirect:/{customerId}/checkAll/diffuser";
     }
 
-    @PutMapping("{id}/diffuserProductionComplete")
-    public String ChangeDiffuserRequestStatusToComplete(@PathVariable("id") Long id, @RequestBody DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
+    @PostMapping("{customerId}/{id}/diffuserProductionComplete")
+    public String ChangeDiffuserRequestStatusToComplete(@PathVariable("id") Long id, @PathVariable("customerId") Long customerId) {
         try{
 
             DiffuserProductRequest diffuserProductRequest = diffuserProductRequestService.find(id);
+            diffuserProductRequest.setStatus(ProductionStatus.COMPLETE);
 
             ProcessingRequest processingRequest = diffuserProductRequest.getProcessingRequest();
-            diffuserProductRequestService.changeDiffuserProductRequestStatusToComplete (processingRequest, diffuserProductRequest, diffuserRequestStatusDetect);
-            return "request/diffuserRequest";
+            diffuserProductRequestService.changeDiffuserProductRequestStatusToComplete (processingRequest, diffuserProductRequest);
+            return "redirect:/{customerId}/checkAll/diffuser";
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/1/main";

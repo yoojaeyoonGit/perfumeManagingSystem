@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container" th:object="${customer}">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+  <h3> 전체 주문 확인 </h3>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>이미지</th>
+      <th>상품명</th>
+      <th>고객명</th>
+      <th>진행상태</th>
+      <th>마감기한</th>
+      <th th:if="${customer.auth.name() == 'Manager'}">상태 변경</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="diffuser : ${diffuserProductRequests}">
+      <td th:text="${diffuser.id}"></td>
+      <td><img th:src="${diffuser.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
+      <td th:text="${diffuser.name}"></td>
+      <td th:text="${diffuser.customer.name}"></td>
+      <td th:text="${diffuser.status}"></td>
+      <td th:text="${diffuser.deadline}"></td>
+      <td th:if="${customer.auth.name() == 'Manager'}">
+        <a
+                th:if="${diffuser.status.name() == 'REQUEST'}"
+                href="#" th:href="'javascript:process('+${diffuser.id}+', '+${customer.id}+')'"
+                class="btn btn-primary" role="button">제조 승인
+        </a>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+
+  <table  class="table table-striped">
+    <div>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>이미지</th>
+        <th>상품명</th>
+        <th>고객명</th>
+        <th>진행상태</th>
+        <th>마감기한</th>
+        <th th:if="${customer.auth.name() == 'Manager'}">상태변경</th>
+      </tr>
+      </thead>
+      <br>
+      <h3> 제조 진행중인 주문 </h3>
+      <tbody>
+      <tr th:each="diffuser : ${diffuserProductProcessingRequests}">
+        <td th:text="${diffuser.id}"></td>
+        <td><img th:src="${diffuser.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
+        <td th:text="${diffuser.name}"></td>
+        <td th:text="${diffuser.customer.name}"></td>
+        <td th:text="${diffuser.status}"></td>
+        <td th:text="${diffuser.deadline}"></td>
+        <td th:if="${customer.auth.name() == 'Manager'}">
+          <a
+                  th:if="${diffuser.status.name() == 'PROCESSING'}"
+                  href="#" th:href="'javascript:complete('+${diffuser.id}+', '+${customer.id}+')'"
+                  class="btn btn-primary" role="button">제조 완료
+          </a>
+        </td>
+
+      </tr>
+      </tbody>
+    </div>
+  </table>
+  <br>
+
+  <table  class="table table-striped">
+    <div>
+      <thead style="margin-top : 30px;">
+      <tr>
+        <th>#</th>
+        <th>이미지</th>
+        <th>상품명</th>
+        <th>고객명</th>
+        <th>진행상태</th>
+        <th>마감기한</th>
+      </tr>
+      </thead>
+      <tbody>
+      <h3 > 제조 완료된 주문 </h3>
+      <tr th:each="diffuser : ${diffuserProductCompleteRequests}">
+        <td th:text="${diffuser.id}"></td>
+        <td><img th:src="${diffuser.image}" alt="" style = "width: 80px; height: 80px; border-radius: 10px;"> </td>
+        <td th:text="${diffuser.name}"></td>
+        <td th:text="${diffuser.customer.name}"></td>
+        <td th:text="${diffuser.status}"></td>
+        <td th:text="${diffuser.deadline}"></td>
+      </tr>
+      </tbody>
+    </div>
+  </table>
+  <div th:replace="fragments/footer :: footer"/>
+</div>
+</div> <!-- /container -->
+<script>
+  function process(itemId, customerId) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action","/" + customerId +  "/" + itemId + "/diffuserProductionProcessing");
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function complete(itemId, customerId) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "POST");
+    form.setAttribute("action","/" + customerId +  "/" + itemId + "/diffuserProductionComplete");
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+
+</script>
+</body>
+</html>

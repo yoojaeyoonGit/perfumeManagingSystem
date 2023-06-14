@@ -26,25 +26,12 @@
         <p>
             <a class="btn btn-lg btn-dark" th:href="@{/{id}/diffuserProductRequest (id=${customer.id})}">디퓨저 제조 주문</a>
             <a class="btn btn-lg btn-dark" th:href="@{/{id}/perfumeProductRequest (id=${customer.id})}">향수 제조 주문</a>
-            <a class="btn btn-lg btn-dark" href="/items">상품 목록</a>
         </p>
         <p class="lead">주문 확인 기능</p>
         <p>
-            <a class="btn btn-lg btn-info" href="/order">주문한 디퓨저 확인하기</a>
+            <a class="btn btn-lg btn-info" th:href="@{{id}/checkAll/diffuser (id=${customer.id})}">주문한 디퓨저 확인하기</a>
             <a class="btn btn-lg btn-info" th:href="@{{id}/checkAll/perfume (id=${customer.id})}">주문한 향수 확인하기</a>
-            <a href="#" th:href="@{/cart/{id} (id=${customer.id})}"
-               class="btn btn-lg btn-info" role="button">장바구니</a>
         </p>
-        <p class="lead">쿠폰 기능</p>
-        <p>
-            <a class="btn btn-lg btn-success" href="/coupon/register">쿠폰 등록</a>
-            <a class="btn btn-lg btn-success" href="/coupon/list">제공 쿠폰</a>
-            <a href="#" th:href="@{/coupon/{id}/list (id=${customer.id})}"
-               class="btn btn-lg btn-success">보유 쿠폰</a>
-        </p>
-
-        <td >
-        </td>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

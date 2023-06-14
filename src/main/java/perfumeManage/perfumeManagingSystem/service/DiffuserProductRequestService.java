@@ -40,14 +40,8 @@ public class DiffuserProductRequestService {
     }
 
     @Transactional
-    public void changeDiffuserProductRequestStatusToProcessing(DiffuserProductRequest diffuserProductRequest, DiffuserRequestStatusDetect diffuserRequestStatusDetect) {
-        System.out.println("this is diffuser name : " + diffuserProductRequest.getName());
-        System.out.println("this is status : " + diffuserRequestStatusDetect.getStatus());
-
+    public void changeDiffuserProductRequestStatusToProcessing(DiffuserProductRequest diffuserProductRequest) {
         // Diffuser 주문 변경 시
-
-        // 주문 상태 변경
-        diffuserProductRequest.setStatus(diffuserRequestStatusDetect.getStatus());
 
         // 상태 변경 시 상태 별 분류 리스트에 추가를 위한 테이블 조작
         Customer customer = diffuserProductRequest.getCustomer();
@@ -70,8 +64,8 @@ public class DiffuserProductRequestService {
 
     // processingRequest 를 받은 이유는 진행 중인 요청의 테이블에서 지우고 위해 받았다.
     @Transactional
-    public void changeDiffuserProductRequestStatusToComplete(ProcessingRequest processingRequest, DiffuserProductRequest diffuserProductRequest, DiffuserRequestStatusDetect diffuserRequestStatusDetect ) {
-        diffuserProductRequest.setStatus(diffuserRequestStatusDetect.getStatus());
+    public void changeDiffuserProductRequestStatusToComplete(ProcessingRequest processingRequest, DiffuserProductRequest diffuserProductRequest) {
+
 
         Customer customer = diffuserProductRequest.getCustomer();
         CompleteRequest completeRequest = customer.getCompleteRequest();
