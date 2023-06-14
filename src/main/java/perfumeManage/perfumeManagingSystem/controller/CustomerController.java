@@ -33,39 +33,6 @@ public class CustomerController {
     }
 
 
-    @GetMapping("{id}/main")
-    public String main (@PathVariable("id") Long id) {
-        List<Customer> customers = customerService.findAllCustomer();
-        for (Customer customer : customers) {
-            System.out.println("Introducing customers : " +customer.getName());
-        }
-
-        List <DiffuserProductRequest> diffuserProductRequests = diffuserProductRequestService.findAllDiffuserProductRequest();
-        for (DiffuserProductRequest diffuserProductRequest : diffuserProductRequests) {
-            System.out.println("Introducing Our diffusers : " + diffuserProductRequest.getName());
-        }
-
-        List <PerfumeProductRequest> perfumeProductRequests = perfumeProductRequestService.findAllPerfumeProductRequest();
-        for (PerfumeProductRequest perfumeProductRequest : perfumeProductRequests) {
-            System.out.println("Introducing Our perfumes : " + perfumeProductRequest.getName());
-        }
-
-
-        ProcessingRequest processingRequest =  processingRequestService.findProcessingRequest(id);
-        List<DiffuserProductRequest> diffuserProductRequestsFromProcessing =  processingRequest.getDiffuserProductRequests();
-        List<PerfumeProductRequest> perfumeProductRequestsFromProcessing =  processingRequest.getPerfumeProductRequests();
-
-
-        for (DiffuserProductRequest diffuserProductRequest : diffuserProductRequestsFromProcessing) {
-            System.out.println("This is Processing diffusers : " + diffuserProductRequest.getName());
-        }
-
-        for (PerfumeProductRequest perfumeProductRequest : perfumeProductRequestsFromProcessing) {
-            System.out.println("This is Processing perfume : " + perfumeProductRequest.getName());
-        }
-        return "customer/customer";
-    }
-
     @GetMapping("/customer/new")
     public String Join(Model model){
         model.addAttribute("customerDto", new CustomerDto());

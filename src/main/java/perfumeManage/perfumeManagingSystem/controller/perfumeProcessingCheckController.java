@@ -51,8 +51,6 @@ public class perfumeProcessingCheckController {
                 List<PerfumeProductRequest> perfumeProductRequests = perfumeProductRequestService.findAllPerfumeProductRequest();
                 model.addAttribute("perfumeProductRequests", perfumeProductRequests);
 
-
-                // 여기가 해답
     //            Long getProcessingRequestId = customer.getProcessingRequest().getId();
     //            ProcessingRequest  processingRequestReady = processingRequestService.findProcessingRequest(getProcessingRequestId);
     //            List<PerfumeProductRequest>  perfumeProductProcessingRequests = processingRequestReady.getPerfumeProductRequests();

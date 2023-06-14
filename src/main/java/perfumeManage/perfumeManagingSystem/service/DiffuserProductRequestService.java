@@ -47,11 +47,11 @@ public class DiffuserProductRequestService {
         Customer customer = diffuserProductRequest.getCustomer();
         ProcessingRequest processingRequest = customer.getProcessingRequest();
 
-        if (processingRequest == null) {
-            processingRequest = ProcessingRequest.createProcessingRequest(customer);
-            diffuserProductRequest.setProcessingRequest(processingRequest);
-            processingRequestRepository.save(processingRequest);
-        }
+//        if (processingRequest == null) {
+//            processingRequest = ProcessingRequest.createProcessingRequest(customer);
+//            diffuserProductRequest.setProcessingRequest(processingRequest);
+//            processingRequestRepository.save(processingRequest);
+//        }
 
         diffuserProductRequest.setProcessingRequest(processingRequest);
         processingRequest.addDiffuserProcessingRequest(diffuserProductRequest);
@@ -66,15 +66,14 @@ public class DiffuserProductRequestService {
     @Transactional
     public void changeDiffuserProductRequestStatusToComplete(ProcessingRequest processingRequest, DiffuserProductRequest diffuserProductRequest) {
 
-
         Customer customer = diffuserProductRequest.getCustomer();
         CompleteRequest completeRequest = customer.getCompleteRequest();
 
-        if (completeRequest == null) {
-            completeRequest = CompleteRequest.createCompleteRequest(customer);
-            diffuserProductRequest.setCompleteRequest(completeRequest);
-            completeRequestRepository.save(completeRequest);
-        }
+//        if (completeRequest == null) {
+//            completeRequest = CompleteRequest.createCompleteRequest(customer);
+//            diffuserProductRequest.setCompleteRequest(completeRequest);
+//            completeRequestRepository.save(completeRequest);
+//        }
 
         List<DiffuserProductRequest> processingDiffusers = processingRequest.getDiffuserProductRequests();
 //        for(DiffuserProductRequest processingDiffuser : processingDiffusers) {

@@ -15,7 +15,7 @@
           <th>고객명</th>
           <th>진행상태</th>
           <th>마감기한</th>
-          <th></th>
+          <th th:if="${customer.auth.name() == 'Manager'}" >상태변경</th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
             <td th:text="${perfume.customer.name}"></td>
             <td th:text="${perfume.status}"></td>
             <td th:text="${perfume.deadline}"></td>
-            <td>
+            <td th:if="${customer.auth.name() == 'Manager'}">
               <a
                     th:if="${perfume.status.name() == 'REQUEST'}"
                     href="#" th:href="'javascript:process('+${perfume.id}+', '+${customer.id}+')'"
@@ -48,7 +48,7 @@
             <th>고객명</th>
             <th>진행상태</th>
             <th>마감기한</th>
-            <th>상태변경</th>
+            <th th:if="${customer.auth.name() == 'Manager'}">상태변경</th>
           </tr>
           </thead>
           <br>
@@ -61,7 +61,7 @@
               <td th:text="${perfume.customer.name}"></td>
               <td th:text="${perfume.status}"></td>
               <td th:text="${perfume.deadline}"></td>
-              <td>
+              <td th:if="${customer.auth.name() == 'Manager'}">
                 <a
                         th:if="${perfume.status.name() == 'PROCESSING'}"
                      href="#" th:href="'javascript:complete('+${perfume.id}+', '+${customer.id}+')'"

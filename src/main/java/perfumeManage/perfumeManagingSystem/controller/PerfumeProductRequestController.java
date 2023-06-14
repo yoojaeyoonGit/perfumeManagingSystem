@@ -26,12 +26,6 @@ public class PerfumeProductRequestController {
     private final PerfumeProductRequestService perfumeProductRequestService;
     private final CustomerService customerService;
 
-//    @PostMapping("{id}/perfumeProduct")
-//    public String PerfumeRequest(@PathVariable("id") Long id, @RequestBody PerfumeRequestDto perfumeRequestDto) {
-//        Customer customer = customerService.findCustomer(id);
-//        perfumeProductRequestService.savePerfumeProductRequest(customer, perfumeRequestDto);
-//        return "request/perfumeRequest";
-//    }
 
     @GetMapping("/{id}/perfumeProductRequest")
     public String PerfumeProductRequest(@PathVariable ("id")Long id, HttpServletRequest request, Model model) {

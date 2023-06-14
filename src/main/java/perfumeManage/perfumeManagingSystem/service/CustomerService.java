@@ -4,9 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import perfumeManage.perfumeManagingSystem.domain.Address;
+import perfumeManage.perfumeManagingSystem.domain.CompleteRequest;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
+import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
 import perfumeManage.perfumeManagingSystem.dto.CustomerDto;
+import perfumeManage.perfumeManagingSystem.repository.CompleteRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.CustomerRepository;
+import perfumeManage.perfumeManagingSystem.repository.ProcessingRequestRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
+    private final CompleteRequestRepository completeRequestRepository;
+
+    private final ProcessingRequestRepository processingRequestRepository;
 
     @Transactional
     public Long saveCustomer(CustomerDto customerDto) {
@@ -34,7 +41,26 @@ public class CustomerService {
 
         validateDuplicateCustomer(customer);
         customerRepository.save(customer);
+
+
+        Customer customerForCompleteAndProcessingRequest = customerRepository.findById(customer.getId());
+        CompleteRequest completeRequest = customerForCompleteAndProcessingRequest.getCompleteRequest();
+        ProcessingRequest processingRequest = customerForCompleteAndProcessingRequest.getProcessingRequest();
+
+
+        if (completeRequest == null) {
+            completeRequest = CompleteRequest.createCompleteRequest(customer);
+            completeRequestRepository.save(completeRequest);
+        }
+
+        if (processingRequest == null) {
+            processingRequest = ProcessingRequest.createProcessingRequest(customer);
+            processingRequestRepository.save(processingRequest);
+        }
+
         return customer.getId();
+
+
     }
 
     public Customer findCustomer(Long id) {

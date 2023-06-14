@@ -47,11 +47,11 @@ public class PerfumeProductRequestService {
             Customer customer = perfumeProductRequest.getCustomer();
             ProcessingRequest processingRequest = customer.getProcessingRequest();
 
-            if (processingRequest == null) {
-                processingRequest = ProcessingRequest.createProcessingRequest(customer);
-                perfumeProductRequest.setProcessingRequest(processingRequest);
-                processingRequestRepository.save(processingRequest);
-            }
+//            if (processingRequest == null) {
+//                processingRequest = ProcessingRequest.createProcessingRequest(customer);
+//                perfumeProductRequest.setProcessingRequest(processingRequest);
+//                processingRequestRepository.save(processingRequest);
+//            }
 
             perfumeProductRequest.setProcessingRequest(processingRequest);
             processingRequest.addPerfumeProcessingRequest(perfumeProductRequest);
@@ -63,11 +63,11 @@ public class PerfumeProductRequestService {
             Customer customer = perfumeProductRequest.getCustomer();
             CompleteRequest completeRequest = customer.getCompleteRequest();
 
-            if (completeRequest == null) {
-                completeRequest = CompleteRequest.createCompleteRequest(customer);
-                perfumeProductRequest.setCompleteRequest(completeRequest);
-                completeRequestRepository.save(completeRequest);
-            }
+//            if (completeRequest == null) {
+//                completeRequest = CompleteRequest.createCompleteRequest(customer);
+//                perfumeProductRequest.setCompleteRequest(completeRequest);
+//                completeRequestRepository.save(completeRequest);
+//            }
 
             List<PerfumeProductRequest> processingPerfumes = processingRequest.getPerfumeProductRequests();
 

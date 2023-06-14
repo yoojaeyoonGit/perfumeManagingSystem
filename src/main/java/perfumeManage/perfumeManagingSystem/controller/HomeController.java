@@ -29,25 +29,14 @@ public class HomeController {
             if (signedUpCustomerList.isEmpty()) {
                 return "redirect:/customer/new";
             } else {
-
                 HttpSession session = httpServletRequest.getSession(false);
-//                System.out.println();
-//                if (session == null) {
-//                    return "redirect:/login";
-//                }
-//
-//                if (session.getAttribute(SessionConst.LOGIN_CUSTOMER) == null) {
-//                    return "redirect:/login";
-//                } else {
-                    Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
-                    Long customerId = loggedInCustomer.getId();
-                    Customer customer = customerService.findCustomer(customerId);
-//
-                    model.addAttribute( "customer", customer);
-                    System.out.println("얘는 계정 주야 " + customer);
 
-                    return "home";
-//                }
+                Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
+                Long customerId = loggedInCustomer.getId();
+                Customer customer = customerService.findCustomer(customerId);
+
+                model.addAttribute( "customer", customer);
+                return "home";
             }
         } catch (Exception e) {
             e.getStackTrace();
