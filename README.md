@@ -1,2 +1,2 @@
-# perfumeManagingSystem
-for managing product order
+# perfume Managing System
+This is perfume ordering program using Spring JPA
