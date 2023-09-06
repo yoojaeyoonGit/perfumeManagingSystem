@@ -26,7 +26,7 @@ public class DiffuserProductRequestService {
     public void saveDiffuserProductRequest(Customer customer, DiffuserRequestDto diffuserRequestDto) {
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
 
-        LocalDate deadline = LocalDate.of(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
+        Deadline deadline = new Deadline(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
         diffuserProductRequest.setCustomer(customer);
         diffuserProductRequest.setName(diffuserRequestDto.getName());
         diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());

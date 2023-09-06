@@ -10,18 +10,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import perfumeManage.perfumeManagingSystem.SessionConst;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 import perfumeManage.perfumeManagingSystem.dto.LoginForm;
+import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class Login {
     private final LoginService loginService;
+    private final CustomerService customerService;
+
     @GetMapping("/login")
     public String login(@ModelAttribute("loginForm") LoginForm loginForm, HttpServletRequest httpServletRequest) {
+
+        List<Customer> customerList =  customerService.findAllCustomer();
+        if (customerList.isEmpty()) {
+            return "redirect:customer/new";
+        }
+
         HttpSession session = httpServletRequest.getSession(false);
 
         if (session == null) {

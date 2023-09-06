@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import perfumeManage.perfumeManagingSystem.domain.Auth;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
 import perfumeManage.perfumeManagingSystem.dto.AuthorityTest;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;

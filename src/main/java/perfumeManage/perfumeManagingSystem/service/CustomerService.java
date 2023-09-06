@@ -59,8 +59,6 @@ public class CustomerService {
         }
 
         return customer.getId();
-
-
     }
 
     public Customer findCustomer(Long id) {

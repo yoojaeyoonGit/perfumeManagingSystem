@@ -7,6 +7,8 @@ import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter @Setter
 public class DiffuserProductRequest {
@@ -14,15 +16,15 @@ public class DiffuserProductRequest {
     @Column(name = "diffuserProductRequest_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
     private ProcessingRequest processingRequest;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "completeRequest_id")
     private CompleteRequest completeRequest;
 
@@ -33,7 +35,7 @@ public class DiffuserProductRequest {
 
     private int amount;
 
-    private LocalDate deadline;
+    private Deadline deadline;
     private String image;
 
     @Enumerated(EnumType.STRING)

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @RequiredArgsConstructor
 @Entity
 @Getter @Setter
@@ -32,10 +34,10 @@ public class Customer {
     private LocalDate signUpDate;
     @Enumerated(EnumType.STRING)
     private Auth auth;
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", fetch = LAZY)
     private ProcessingRequest processingRequest;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", fetch = LAZY)
     private CompleteRequest completeRequest;
 
     @OneToMany(mappedBy = "customer")

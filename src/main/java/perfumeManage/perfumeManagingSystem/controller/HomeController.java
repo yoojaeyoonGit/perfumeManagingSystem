@@ -31,7 +31,16 @@ public class HomeController {
             } else {
                 HttpSession session = httpServletRequest.getSession(false);
 
+                if (session == null ) {
+                    return "redirect:/login";
+                }
+
                 Customer loggedInCustomer = (Customer) session.getAttribute(SessionConst.LOGIN_CUSTOMER);
+
+                if (loggedInCustomer == null ) {
+                    return "redirect:/login";
+                }
+
                 Long customerId = loggedInCustomer.getId();
                 Customer customer = customerService.findCustomer(customerId);
 
