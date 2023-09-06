@@ -42,7 +42,7 @@ public class HomeController {
                 }
 
                 Long customerId = loggedInCustomer.getId();
-                Customer customer = customerService.findCustomer(customerId);
+                Customer customer = customerService.findCustomerById(customerId);
 
                 model.addAttribute( "customer", customer);
                 return "home";

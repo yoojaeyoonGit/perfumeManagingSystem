@@ -1,5 +1,6 @@
 package perfumeManage.perfumeManagingSystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<PerfumeProductRequest> perfumeRequests = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<DiffuserProductRequest> diffuserRequests = new ArrayList<>();
 

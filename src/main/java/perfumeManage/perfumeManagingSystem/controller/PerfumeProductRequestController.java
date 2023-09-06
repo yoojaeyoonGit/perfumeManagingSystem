@@ -43,7 +43,7 @@ public class PerfumeProductRequestController {
 
     @PostMapping("{id}/perfumeProductRequest")
     public String PerfumeProductRequest(@PathVariable("id") Long id, PerfumeRequestDto perfumeRequestDto) {
-        Customer customer = customerService.findCustomer(id);
+        Customer customer = customerService.findCustomerById(id);
 
         PerfumeProductRequest perfumeProductRequest = new PerfumeProductRequest();
         LocalDate deadline = LocalDate.of(perfumeRequestDto.getYear(), perfumeRequestDto.getMonth(), perfumeRequestDto.getDate());

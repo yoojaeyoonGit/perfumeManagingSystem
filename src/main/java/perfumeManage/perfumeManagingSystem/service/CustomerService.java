@@ -48,7 +48,7 @@ public class CustomerService {
         return customer.getId();
     }
 
-    public Customer findCustomer(Long id) {
+    public Customer findCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 
@@ -62,6 +62,12 @@ public class CustomerService {
         if (!customers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    @Transactional
+    public void updateCustomer(Long id, String name) {
+        Customer customer = customerRepository.findById(id);
+        customer.setName(name);
     }
 
 }

@@ -24,7 +24,7 @@ public class DiffuserProcessingCheckController {
 
     @GetMapping("{id}/checkAll/diffuser")
     public String checkAllProcessingDiffuser(@PathVariable("id") Long customerId, Model model) {
-        Customer customer = customerService.findCustomer(customerId);
+        Customer customer = customerService.findCustomerById(customerId);
         model.addAttribute(customer);
         // General 권한 멤버의 모든 주문 [ request, processing, complete ]
 

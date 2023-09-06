@@ -18,7 +18,7 @@ public class GivingManagerAuthorityController {
 
     @GetMapping("{id}/auth")
     public String checkAuthority (@PathVariable ("id") Long id, Model model) {
-        Customer customer = customerService.findCustomer(id);
+        Customer customer = customerService.findCustomerById(id);
         model.addAttribute("customer", customer);
         model.addAttribute("AuthorityTest", new AuthorityTest());
 
@@ -27,7 +27,7 @@ public class GivingManagerAuthorityController {
 
     @PostMapping("{id}/auth")
     public String changeAuthority(@PathVariable ("id") Long id, AuthorityTest authorityTest) {
-        Customer customer = customerService.findCustomer(id);
+        Customer customer = customerService.findCustomerById(id);
         boolean authorityTestCheck = givingManagerAuthorityService.giveManagerAuthority(customer, authorityTest);
 //      Manager
         if (authorityTestCheck == true) {

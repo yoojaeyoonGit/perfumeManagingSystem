@@ -26,7 +26,7 @@ public class perfumeProcessingCheckController {
     @GetMapping("{id}/checkAll/perfume")
     public String checkAllProcessingPerfume(@PathVariable("id") Long customerId, Model model, HttpServletRequest httpServletRequest) {
         try {
-            Customer customer = customerService.findCustomer(customerId);
+            Customer customer = customerService.findCustomerById(customerId);
             model.addAttribute(customer);
 
             // General 권한의 멤버의 진행 중인 주문

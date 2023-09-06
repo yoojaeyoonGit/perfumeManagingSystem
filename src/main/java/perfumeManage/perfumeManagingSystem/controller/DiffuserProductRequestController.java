@@ -36,7 +36,7 @@ public class DiffuserProductRequestController {
 
     @PostMapping("{id}/diffuserProductRequest")
     public String diffuserRequest(@PathVariable("id") Long id, DiffuserRequestDto diffuserRequestDto) {
-        Customer customer = customerService.findCustomer(id);
+        Customer customer = customerService.findCustomerById(id);
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
 
         Deadline deadline = new Deadline(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
