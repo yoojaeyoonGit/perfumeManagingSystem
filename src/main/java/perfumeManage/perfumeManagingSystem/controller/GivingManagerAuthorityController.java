@@ -35,6 +35,5 @@ public class GivingManagerAuthorityController {
         } else {
             return "redirect:/{id}/auth";
         }
-
     }
 }

@@ -46,4 +46,17 @@ public class DiffuserProductRequest {
 //        for(DiffuserProductRequest diffuserProductRequest1 : )
 //        return diffuserProductRequest;
 //    }
+
+    // 생성 메서드
+    public static DiffuserProductRequest createDiffuserProductRequest(String name, Customer customer, String recipe, int amount, Deadline deadline, String image) {
+        DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
+        diffuserProductRequest.setCustomer(customer);
+        diffuserProductRequest.setName(name);
+        diffuserProductRequest.setRecipe(recipe);
+        diffuserProductRequest.setAmount(amount);
+        diffuserProductRequest.setDeadline(deadline);
+        diffuserProductRequest.setImage(image);
+        diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
+        return diffuserProductRequest;
+    }
 }

@@ -38,7 +38,6 @@ public class DiffuserProcessingCheckController {
             List<DiffuserProductRequest> diffuserProductProcessingRequests = customer.getProcessingRequest().getDiffuserProductRequests();
             model.addAttribute("diffuserProductProcessingRequests", diffuserProductProcessingRequests);
 
-
             // 완료 된 주문
             List<DiffuserProductRequest> diffuserProductCompleteRequests = customer.getCompleteRequest().getDiffuserProductRequests();
             model.addAttribute("diffuserProductCompleteRequests", diffuserProductCompleteRequests);
@@ -56,9 +55,12 @@ public class DiffuserProcessingCheckController {
 
             for (ProcessingRequest processingDiffuserInObject : diffuserProductProcessingRequestReady) {
                 List<DiffuserProductRequest> processingDiffuser = processingDiffuserInObject.getDiffuserProductRequests();
-                for (DiffuserProductRequest diffuserProductProcessingRequest : processingDiffuser) {
-                    diffuserProductProcessingRequests.add(diffuserProductProcessingRequest);
-                }
+                diffuserProductProcessingRequests.addAll(processingDiffuser);
+
+                // 위 addAll() 코드가 아래 코드 줄인 거임 ㄷ
+//              for (DiffuserProductRequest diffuserProductProcessingRequest : processingDiffuser) {
+//                  diffuserProductProcessingRequests.add(diffuserProductProcessingRequest);
+//              }
             }
             model.addAttribute("diffuserProductProcessingRequests", diffuserProductProcessingRequests);
 
