@@ -11,6 +11,7 @@ import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService
 import perfumeManage.perfumeManagingSystem.service.PerfumeProductRequestService;
 import perfumeManage.perfumeManagingSystem.service.ProcessingRequestService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -43,7 +44,21 @@ public class CustomerController {
     @PostMapping("/customer/new")
     public String signIn(CustomerDto customerDto) {
         customerDto.setAuth(Auth.General);
-        customerService.saveCustomer(customerDto);
+
+        Address address = new Address(customerDto.getCountry(), customerDto.getCity(), customerDto.getStreetAddress() , customerDto.getDetailedAddress(), customerDto.getZipcode());
+
+        Customer customer = new Customer();
+        customer.setName(customerDto.getName());
+        customer.setGender(customerDto.getGender());
+        customer.setAuth(customerDto.getAuth());
+        customer.setAge(customerDto.getAge());
+        customer.setPassword(customerDto.getPassword());
+        customer.setPhoneNumber(customerDto.getPhoneNumber());
+        customer.setSignUpDate(LocalDate.now());
+        customer.setAddress(address);
+        customer.setAuth(customerDto.getAuth());
+
+        customerService.saveCustomer(customer);
         return "redirect:/login";
     }
 }

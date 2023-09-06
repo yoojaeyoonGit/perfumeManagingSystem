@@ -23,20 +23,8 @@ public class DiffuserProductRequestService {
 
 
     @Transactional
-    public void saveDiffuserProductRequest(Customer customer, DiffuserRequestDto diffuserRequestDto) {
-        DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
-
-        Deadline deadline = new Deadline(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
-        diffuserProductRequest.setCustomer(customer);
-        diffuserProductRequest.setName(diffuserRequestDto.getName());
-        diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());
-        diffuserProductRequest.setAmount(diffuserRequestDto.getAmount());
-        diffuserProductRequest.setDeadline(deadline);
-        diffuserProductRequest.setImage(diffuserRequestDto.getImage());
-        diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
+    public void saveDiffuserProductRequest(DiffuserProductRequest diffuserProductRequest) {
         diffuserProductRequestRepository.save(diffuserProductRequest);
-
-        customer.addDiffuserProductRequest(diffuserProductRequest);
     }
 
     @Transactional

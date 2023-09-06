@@ -21,13 +21,15 @@ public class DiffuserProductRequest {
     private Customer customer;
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "diffuser_id")
+    private Diffuser diffuser;
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
     private ProcessingRequest processingRequest;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "completeRequest_id")
     private CompleteRequest completeRequest;
-
 
     private String name;
 

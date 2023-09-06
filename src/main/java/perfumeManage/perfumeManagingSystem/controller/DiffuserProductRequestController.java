@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import perfumeManage.perfumeManagingSystem.SessionConst;
-import perfumeManage.perfumeManagingSystem.domain.Customer;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProductionStatus;
+import perfumeManage.perfumeManagingSystem.domain.*;
 import perfumeManage.perfumeManagingSystem.dto.CustomerDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
@@ -40,7 +37,19 @@ public class DiffuserProductRequestController {
     @PostMapping("{id}/diffuserProductRequest")
     public String diffuserRequest(@PathVariable("id") Long id, DiffuserRequestDto diffuserRequestDto) {
         Customer customer = customerService.findCustomer(id);
-        diffuserProductRequestService.saveDiffuserProductRequest(customer, diffuserRequestDto);
+        DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
+
+        Deadline deadline = new Deadline(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
+        diffuserProductRequest.setCustomer(customer);
+        diffuserProductRequest.setName(diffuserRequestDto.getName());
+        diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());
+        diffuserProductRequest.setAmount(diffuserRequestDto.getAmount());
+        diffuserProductRequest.setDeadline(deadline);
+        diffuserProductRequest.setImage(diffuserRequestDto.getImage());
+        diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
+        diffuserProductRequest.getCustomer().addDiffuserProductRequest(diffuserProductRequest);
+
+        diffuserProductRequestService.saveDiffuserProductRequest(diffuserProductRequest);
         return "redirect:/";
     }
 

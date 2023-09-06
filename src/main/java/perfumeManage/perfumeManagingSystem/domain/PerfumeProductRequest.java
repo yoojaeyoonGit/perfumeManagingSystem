@@ -20,6 +20,10 @@ public class PerfumeProductRequest {
     private Customer customer;
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "diffuser_id")
+    private Perfume perfume;
+
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
     private ProcessingRequest processingRequest;
 

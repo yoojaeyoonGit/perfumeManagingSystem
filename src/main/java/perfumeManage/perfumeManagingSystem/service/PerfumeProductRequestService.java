@@ -25,20 +25,7 @@ public class PerfumeProductRequestService {
 
     private final CompleteRequestRepository completeRequestRepository;
     @Transactional
-    public void savePerfumeProductRequest(Customer customer, PerfumeRequestDto perfumeRequestDto) {
-
-        PerfumeProductRequest perfumeProductRequest = new PerfumeProductRequest();
-        LocalDate deadline = LocalDate.of(perfumeRequestDto.getYear(), perfumeRequestDto.getMonth(), perfumeRequestDto.getDate());
-        perfumeProductRequest.setCustomer(customer);
-        perfumeProductRequest.setName(perfumeRequestDto.getName());
-        perfumeProductRequest.setRecipe(perfumeRequestDto.getRecipe());
-        perfumeProductRequest.setAmount(perfumeRequestDto.getAmount());
-        perfumeProductRequest.setDeadline(deadline);
-        perfumeProductRequest.setImage(perfumeRequestDto.getImage());
-        perfumeProductRequest.setStatus(ProductionStatus.REQUEST);
-
-        customer.addPerfumeProductRequest(perfumeProductRequest);
-
+    public void savePerfumeProductRequest(PerfumeProductRequest perfumeProductRequest) {
         perfumeProductRequestRepository.save(perfumeProductRequest);
     }
 

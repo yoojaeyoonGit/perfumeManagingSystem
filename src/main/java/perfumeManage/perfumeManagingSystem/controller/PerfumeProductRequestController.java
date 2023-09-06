@@ -17,6 +17,7 @@ package perfumeManage.perfumeManagingSystem.controller;
 
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpSession;
+        import java.time.LocalDate;
         import java.util.List;
 
 @Controller
@@ -43,7 +44,20 @@ public class PerfumeProductRequestController {
     @PostMapping("{id}/perfumeProductRequest")
     public String PerfumeProductRequest(@PathVariable("id") Long id, PerfumeRequestDto perfumeRequestDto) {
         Customer customer = customerService.findCustomer(id);
-        perfumeProductRequestService.savePerfumeProductRequest(customer, perfumeRequestDto);
+
+        PerfumeProductRequest perfumeProductRequest = new PerfumeProductRequest();
+        LocalDate deadline = LocalDate.of(perfumeRequestDto.getYear(), perfumeRequestDto.getMonth(), perfumeRequestDto.getDate());
+        perfumeProductRequest.setCustomer(customer);
+        perfumeProductRequest.setName(perfumeRequestDto.getName());
+        perfumeProductRequest.setRecipe(perfumeRequestDto.getRecipe());
+        perfumeProductRequest.setAmount(perfumeRequestDto.getAmount());
+        perfumeProductRequest.setDeadline(deadline);
+        perfumeProductRequest.setImage(perfumeRequestDto.getImage());
+        perfumeProductRequest.setStatus(ProductionStatus.REQUEST);
+
+        customer.addPerfumeProductRequest(perfumeProductRequest);
+
+        perfumeProductRequestService.savePerfumeProductRequest(perfumeProductRequest);
         return "redirect:/";
     }
 
@@ -66,6 +80,7 @@ public class PerfumeProductRequestController {
             perfumeProductRequest.setStatus(ProductionStatus.COMPLETE);
 
             ProcessingRequest processingRequest = perfumeProductRequest.getProcessingRequest();
+            Customer customer = processingRequest.getCustomer();
             perfumeProductRequestService.changePerfumeProductRequestStatusToComplete (processingRequest, perfumeProductRequest);
 
 
