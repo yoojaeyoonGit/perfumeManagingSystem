@@ -23,6 +23,7 @@ public class DiffuserProductRequest {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "diffuser_id")
     private Diffuser diffuser;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
     private ProcessingRequest processingRequest;
@@ -31,14 +32,9 @@ public class DiffuserProductRequest {
     @JoinColumn(name = "completeRequest_id")
     private CompleteRequest completeRequest;
 
-    private String name;
-
-    private String recipe;
-
     private int amount;
 
     private Deadline deadline;
-    private String image;
 
     @Enumerated(EnumType.STRING)
     private ProductionStatus status;
@@ -50,14 +46,12 @@ public class DiffuserProductRequest {
 //    }
 
     // 생성 메서드
-    public static DiffuserProductRequest createDiffuserProductRequest(String name, Customer customer, String recipe, int amount, Deadline deadline, String image) {
+    public static DiffuserProductRequest createDiffuserProductRequest(Customer customer, Diffuser diffuser, int amount, Deadline deadline) {
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
         diffuserProductRequest.setCustomer(customer);
-        diffuserProductRequest.setName(name);
-        diffuserProductRequest.setRecipe(recipe);
         diffuserProductRequest.setAmount(amount);
         diffuserProductRequest.setDeadline(deadline);
-        diffuserProductRequest.setImage(image);
+        diffuserProductRequest.setDiffuser(diffuser);
         diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
         return diffuserProductRequest;
     }

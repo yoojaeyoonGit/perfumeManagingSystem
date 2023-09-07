@@ -17,11 +17,11 @@ public class DiffuserRepository {
         em.persist(diffuser);
     }
 
-    public void findById(Long id) {
-        em.find(Diffuser.class, id);
+    public Diffuser findById(Long id) {
+        return em.find(Diffuser.class, id);
     }
 
-    public List<Diffuser> findAllCompleteRequest () {
+    public List<Diffuser> findAllDiffuser () {
         return em.createQuery("select d from Diffuser d", Diffuser.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
                 .getResultList();
     }

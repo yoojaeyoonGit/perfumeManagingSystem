@@ -11,6 +11,7 @@ import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
+import perfumeManage.perfumeManagingSystem.service.DiffuserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequiredArgsConstructor
 public class DiffuserProductRequestController {
-
+    private final DiffuserService diffuserService;
     private final DiffuserProductRequestService diffuserProductRequestService;
     private final CustomerService customerService;
     @GetMapping("/{id}/diffuserProductRequest")
@@ -34,19 +35,19 @@ public class DiffuserProductRequestController {
         return "request/diffuserRequest";
     }
 
-    @PostMapping("{id}/diffuserProductRequest")
-    public String diffuserRequest(@PathVariable("id") Long id, DiffuserRequestDto diffuserRequestDto) {
-        Customer customer = customerService.findCustomerById(id);
+    @PostMapping("{customerId}/{diffuserId}/diffuserProductRequest")
+    public String diffuserRequest(@PathVariable("customerId") Long customerId,@PathVariable("diffuserId") Long diffuserId, DiffuserRequestDto diffuserRequestDto) {
+        Customer customer = customerService.findCustomerById(customerId);
+
+        Diffuser diffuser = diffuserService.findById(diffuserId);
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
 
         Deadline deadline = new Deadline(diffuserRequestDto.getYear(), diffuserRequestDto.getMonth(), diffuserRequestDto.getDate());
         diffuserProductRequest.setCustomer(customer);
-        diffuserProductRequest.setName(diffuserRequestDto.getName());
-        diffuserProductRequest.setRecipe(diffuserRequestDto.getRecipe());
         diffuserProductRequest.setAmount(diffuserRequestDto.getAmount());
         diffuserProductRequest.setDeadline(deadline);
-        diffuserProductRequest.setImage(diffuserRequestDto.getImage());
         diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
+        diffuserProductRequest.setDiffuser(diffuser);
         diffuserProductRequest.getCustomer().addDiffuserProductRequest(diffuserProductRequest);
 
         diffuserProductRequestService.saveDiffuserProductRequest(diffuserProductRequest);

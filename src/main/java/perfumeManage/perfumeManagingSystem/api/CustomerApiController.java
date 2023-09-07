@@ -54,7 +54,7 @@ public class CustomerApiController {
         Customer customer = new Customer();
         customer.setName(createCustomerRequest.getName());
         customer.setPassword(createCustomerRequest.getPassword());
-//      customer.setGender(createCustomerRequest.getGender());
+        customer.setGender(createCustomerRequest.getGender());
         customer.setAge(createCustomerRequest.getAge());
         customer.setAddress(new Address(createCustomerRequest.getCountry(), createCustomerRequest.getCity(), createCustomerRequest.getStreetAddress(), createCustomerRequest.getDetailedAddress(), createCustomerRequest.getZipcode()));
         customer.setPhoneNumber(createCustomerRequest.getPhoneNumber());

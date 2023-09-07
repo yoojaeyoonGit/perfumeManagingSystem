@@ -17,11 +17,11 @@ public class PerfumeRepository {
         em.persist(perfume);
     }
 
-    public void findById(Long id) {
-        em.find(Perfume.class, id);
+    public Perfume findById(Long id) {
+        return em.find(Perfume.class, id);
     }
 
-    public List<Perfume> findAllCompleteRequest () {
+    public List<Perfume> findAllPerfume () {
         return em.createQuery("select p from Perfume p", Perfume.class) // 첫 번째 JPQL 사용, 두 번째 반환타입
                 .getResultList();
     }
