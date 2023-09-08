@@ -88,6 +88,10 @@ public class DiffuserProductRequestService {
         return diffuserProductRequest;
     }
 
+    public List<DiffuserProductRequest> GeneralUserDiffProduct(Long id) {
+         return diffuserProductRequestRepository.findByAuth(id);
+    }
+
     public List<DiffuserProductRequest> findAllDiffuserProductRequest() {
         return diffuserProductRequestRepository.findAll();
     }

@@ -3,6 +3,7 @@ package perfumeManage.perfumeManagingSystem.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
+import perfumeManage.perfumeManagingSystem.domain.Diffuser;
 import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,14 @@ public class DiffuserProductRequestRepository {
         return em.find(DiffuserProductRequest.class, diffuserProductRequestId);
     }
 
+    public List<DiffuserProductRequest> findByAuth(Long id) {
+        return em.createQuery("select d from DiffuserProductRequest d " +
+//                        " join fetch d.diffuser df" +
+//                        " join fetch d.customer c" +
+                        " where d.customer.id = :id", DiffuserProductRequest.class)
+                .setParameter("id", id)
+                .getResultList();
+    }
 
     public List<DiffuserProductRequest> findAll() {
         return em.createQuery("select d from DiffuserProductRequest d", DiffuserProductRequest.class) // 첫 번째 JPQL 사용, 두 번째 반환타입

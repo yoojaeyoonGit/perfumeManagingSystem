@@ -35,6 +35,10 @@ public class Customer {
     private LocalDate signUpDate;
     @Enumerated(EnumType.STRING)
     private Auth auth;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Order> orders = new ArrayList<>();
+
     @OneToOne(mappedBy = "customer", fetch = LAZY)
     private ProcessingRequest processingRequest;
 

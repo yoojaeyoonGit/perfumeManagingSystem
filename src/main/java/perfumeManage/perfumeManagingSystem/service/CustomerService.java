@@ -21,7 +21,6 @@ import java.util.List;
 public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CompleteRequestRepository completeRequestRepository;
-
     private final ProcessingRequestRepository processingRequestRepository;
 
     @Transactional

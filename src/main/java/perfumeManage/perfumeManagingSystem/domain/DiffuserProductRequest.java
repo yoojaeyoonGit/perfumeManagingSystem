@@ -1,5 +1,6 @@
 package perfumeManage.perfumeManagingSystem.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
@@ -23,6 +24,10 @@ public class DiffuserProductRequest {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "diffuser_id")
     private Diffuser diffuser;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
