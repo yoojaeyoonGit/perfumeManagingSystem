@@ -1,2 +1,3 @@
 # perfume Managing System
-This is perfume ordering program using Spring JPA
+
+SpringBoot JPA 공부용 미니 프로젝트
