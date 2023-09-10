@@ -24,4 +24,9 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<PerfumeProductRequest> perfumeProductRequests = new ArrayList<>();
+
+    public void addDiffuserProductRequest(DiffuserProductRequest diffuserProductRequest) {
+        diffuserProductRequests.add(diffuserProductRequest);
+        diffuserProductRequest.setOrder(this);
+    }
 }

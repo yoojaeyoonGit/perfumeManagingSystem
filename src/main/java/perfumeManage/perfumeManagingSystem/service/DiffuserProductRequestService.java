@@ -71,10 +71,17 @@ public class DiffuserProductRequestService {
 //            }
 //        }
 
-        for (int i = 0; i < processingDiffusers.size(); i++) {
-            if (diffuserProductRequest == processingDiffusers.get(i)) {
-                processingDiffusers.get(i).setProcessingRequest(null);
-                processingDiffusers.remove(processingDiffusers.get(i));
+//        for (int i = 0; i < processingDiffusers.size(); i++) {
+//            if (diffuserProductRequest == processingDiffusers.get(i)) {
+//                processingDiffusers.get(i).setProcessingRequest(null);
+//                processingDiffusers.remove(processingDiffusers.get(i));
+//            }
+//        }
+
+        for (DiffuserProductRequest processingDiffuser : processingDiffusers) {
+            if (diffuserProductRequest == processingDiffuser) {
+                processingDiffuser.setProcessingRequest(null);
+                processingDiffusers.remove(processingDiffuser);
             }
         }
 

@@ -36,6 +36,7 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     private Auth auth;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
