@@ -33,10 +33,7 @@ public class initDb {
             em.persist(customer);
 
             for (int i = 0; i < 9; i++) {
-                Diffuser diffuser = new Diffuser();
-                diffuser.setName("holly day");
-                diffuser.setRecipe("Gucci 30%, Prada 25%, Hermes 15%, Le labo 20%, Blanche 10%");
-                diffuser.setImage("https://www.creedfragrances.co.uk/tco-images/unsafe/513x342/filters:upscale():fill(white):quality(75)/https://www.creedfragrances.co.uk/static/uploads/2023/01/feature-2.jpg");
+                Diffuser diffuser = createDiffuser("holly day", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
                 em.persist(diffuser);
 
                 DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(customer, diffuser, 3500,  new Deadline(2025, 11, 4));
@@ -50,8 +47,6 @@ public class initDb {
                     diffuserProductRequest.setStatus(ProductionStatus.COMPLETE);
                 }
             }
-//
-//
         }
 
         public void dbInit2() {
@@ -59,11 +54,9 @@ public class initDb {
             em.persist(customer);
 
             for (int i = 0; i < 9; i++) {
-                Diffuser diffuser = new Diffuser();
-                diffuser.setName("holly day");
-                diffuser.setRecipe("Gucci 30%, Prada 25%, Hermes 15%, Le labo 20%, Blanche 10%");
-                diffuser.setImage("https://www.creedfragrances.co.uk/tco-images/unsafe/513x342/filters:upscale():fill(white):quality(75)/https://www.creedfragrances.co.uk/static/uploads/2023/01/feature-2.jpg");
+                Diffuser diffuser = createDiffuser("홍차티", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
                 em.persist(diffuser);
+
 
                 DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(customer, diffuser, 3500,  new Deadline(2025, 11, 4));
                 em.persist(diffuserProductRequest);
@@ -78,7 +71,7 @@ public class initDb {
             }
 
             for (int i = 0; i < 7; i++) {
-                createDiffuser("홍차티", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
+
             }
         }
 
