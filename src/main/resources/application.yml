@@ -1,13 +1,15 @@
-
 Spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/perfume_product_db?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://db:3306/perfumeDB?createDatabaseIfNotExist=true&characterEncoding=UTF-8&profileSql=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+
     username: root
-    password: 20031105
+    password: 1105
+  # Hibernate 방언 설정
+
   devtools:
     restart:
       enabled: true
@@ -29,3 +31,34 @@ logging:
     # ??????? System.out ?? logger? ?? ????
     org.hibernate.type: trace
 
+
+#
+#Spring:
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/perfume_product_db?serverTimezone=Asia/Seoul
+#    username: root
+#    password: 1105
+#  devtools:
+#    restart:
+#      enabled: true
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    #     ?????? ????? ??? ?? ???? ?? ??? ?? ??
+#    properties:
+#      hibernate:
+#        #        show_sql: true
+#        format_sql: true
+#        default_batch_fetch_size: 100
+#
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
+#    # logger? ?? ???
+#    # ??????? System.out ?? logger? ?? ????
+#    org.hibernate.type: trace

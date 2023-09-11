@@ -30,6 +30,8 @@ public class initDb {
 
         public void dbInit1() {
             Customer customer = createMember("홍숙","1105", Gender.Female, "Korea", "Seoul", "GwangHwaMoon", "11dong 103ho", "12322");
+            customer.setAuth(Auth.Manager);
+            System.out.println("멤버 권한 변경");
             em.persist(customer);
 
             for (int i = 0; i < 9; i++) {
