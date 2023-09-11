@@ -16,6 +16,14 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findByJoinFetchByAuth() {
+        return em.createQuery("select o from Order o" +
+                        " join fetch o.customer c" +
+                        " join fetch o.diffuserProductRequests dr" +
+                        " join fetch dr.diffuser diff", Order.class)
+                .getResultList();
+    }
+
     public List<Order> findByAuth(Long id) {
         return em.createQuery(" select o from Order o  " +
                 "where  o.customer.id = :id", Order.class)

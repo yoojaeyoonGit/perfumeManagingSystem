@@ -21,9 +21,8 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createOrder(Customer customer, Diffuser diffuser, Deadline deadline, int amount) {
-        Order order = new Order();
-        order.setCustomer(customer);
+    public Order createDiffRequest(Order order, Diffuser diffuser, Deadline deadline, int amount) {
+
 
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
 
@@ -35,11 +34,13 @@ public class OrderService {
         diffuserProductRequest.setStatus(ProductionStatus.REQUEST);
         order.addDiffuserProductRequest(diffuserProductRequest);
 
-
         diffuserProductRequestService.saveDiffuserProductRequest(diffuserProductRequest);
-        orderRepository.save(order);
 
         return order;
+    }
+
+    public void save(Order order) {
+        orderRepository.save(order);
     }
 
     public List<Order> findAll() {

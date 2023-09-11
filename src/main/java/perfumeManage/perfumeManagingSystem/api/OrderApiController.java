@@ -1,4 +1,4 @@
-package perfumeManage.perfumeManagingSystem.controller;
+package perfumeManage.perfumeManagingSystem.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,11 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.repository.OrderRepository;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserService;
 import perfumeManage.perfumeManagingSystem.service.OrderService;
 
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +24,24 @@ public class OrderApiController {
     private final OrderService orderService;
     private final CustomerService customerService;
 
+    private final OrderRepository orderRepository;
     private final DiffuserService diffuserService;
 
-    @GetMapping("api/orders/{id}")
-    public ResultMany findByAuth(@PathVariable("id") Long id) {
+
+    @GetMapping("api/v1/orders/{id}")
+    public ResultMany findByJoinFetch(@PathVariable("id") Long id) {
+        Customer customer = customerService.findCustomerById(id);
+        if (customer.getAuth() == Auth.General) {
+            List<Order> orders = orderRepository.findByJoinFetchByAuth();
+            return getOrderDtoList(orders);
+        } else {
+            List<Order> orders = orderService.findAll();
+            return getOrderDtoList(orders);
+        }
+    }
+
+    @GetMapping("api/v2/orders/{id}") // batch_fetch_size 검색용
+    public ResultMany findByBatchFetch(@PathVariable("id") Long id) {
         Customer customer = customerService.findCustomerById(id);
         if (customer.getAuth() == Auth.General) {
             List<Order> orders = orderService.findByAuth(customer.getId());
@@ -38,16 +55,22 @@ public class OrderApiController {
 
     @PostMapping("api/orders/{id}")
     public Result createOrder(@PathVariable("id") Long id,
-                              @RequestBody OrderRequest orderRequest) {
+                              @RequestBody @Valid List<OrderRequest> orderRequest) {
         Customer customer = customerService.findCustomerById(id);
-        Diffuser diffuser = diffuserService.findById(orderRequest.getDiffuserId());
+        Order order = new Order();
+        order.setCustomer(customer);
+        orderService.save(order);
+        List<OrderDto> orderDtoList = new ArrayList<>();
 
-        Deadline deadline = new Deadline(orderRequest.getYear(), orderRequest.getMonth(), orderRequest.getDate());
-        Order order = orderService.createOrder(customer, diffuser, deadline, orderRequest.getAmount());
+        for (OrderRequest request : orderRequest) {
 
-        OrderDto orderDto = new OrderDto(order);
-
-        return new Result(orderDto);
+            Diffuser diffuser = diffuserService.findById(request.getDiffuserId());
+            Deadline deadline = new Deadline(request.getYear(), request.getMonth(), request.getDate());
+            orderService.createDiffRequest(order, diffuser, deadline, request.getAmount());
+            OrderDto orderDto = new OrderDto(order);
+            orderDtoList.add(orderDto);
+        }
+        return new Result(orderDtoList);
     }
 
     @Data
