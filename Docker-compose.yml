@@ -20,7 +20,7 @@ services:
 
   webapp: # 내가 선택한 서비스의 이름 변경 가능함
     build:
-      context: .  # dockerfile의 위치
+      context: . # dockerfile의 위치
       dockerfile: Dockerfile
     environment:
       WAIT_HOSTS: db:3306
@@ -28,7 +28,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1105
     ports:
-      - "8080:8080"
+      - "80:80"
     depends_on:
       - db
     command: ["java", "-jar", "/app.jar"]
