@@ -6,6 +6,7 @@ package perfumeManage.perfumeManagingSystem.controller;
         import org.springframework.web.bind.annotation.GetMapping;
         import org.springframework.web.bind.annotation.PathVariable;
         import perfumeManage.perfumeManagingSystem.domain.*;
+        import perfumeManage.perfumeManagingSystem.domain.productionRequest.PerfumeProductRequest;
         import perfumeManage.perfumeManagingSystem.service.*;
 
         import javax.servlet.http.HttpServletRequest;

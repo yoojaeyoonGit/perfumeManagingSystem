@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.PerfumeProductRequest;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

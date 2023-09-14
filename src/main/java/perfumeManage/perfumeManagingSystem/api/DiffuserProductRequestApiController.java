@@ -3,15 +3,13 @@ package perfumeManage.perfumeManagingSystem.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import perfumeManage.perfumeManagingSystem.domain.Auth;
 import perfumeManage.perfumeManagingSystem.domain.Customer;
-import perfumeManage.perfumeManagingSystem.domain.Diffuser;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;
 

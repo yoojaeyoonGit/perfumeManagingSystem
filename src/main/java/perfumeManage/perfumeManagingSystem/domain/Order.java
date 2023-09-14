@@ -2,6 +2,8 @@ package perfumeManage.perfumeManagingSystem.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.PerfumeProductRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import perfumeManage.perfumeManagingSystem.domain.PerfumeProductRequest;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.PerfumeProductRequest;
 
 import java.util.List;
 

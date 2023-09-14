@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.service.CompleteRequestService;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserProductRequestService;

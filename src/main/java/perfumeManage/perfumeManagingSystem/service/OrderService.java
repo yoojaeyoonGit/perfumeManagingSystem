@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.domain.product.Diffuser;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.repository.OrderRepository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
@@ -39,7 +40,7 @@ public class OrderService {
         return order;
     }
 
-    public void save(Order order) {
+    public void createOrder(Order order) {
         orderRepository.save(order);
     }
 

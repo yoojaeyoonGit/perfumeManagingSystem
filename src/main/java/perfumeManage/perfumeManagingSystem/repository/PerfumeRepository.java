@@ -2,8 +2,7 @@ package perfumeManage.perfumeManagingSystem.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import perfumeManage.perfumeManagingSystem.domain.Diffuser;
-import perfumeManage.perfumeManagingSystem.domain.Perfume;
+import perfumeManage.perfumeManagingSystem.domain.product.Perfume;
 
 import javax.persistence.EntityManager;
 import java.util.List;

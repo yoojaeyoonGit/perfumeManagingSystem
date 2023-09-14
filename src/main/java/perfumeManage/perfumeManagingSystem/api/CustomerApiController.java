@@ -31,7 +31,6 @@ public class CustomerApiController {
         return new Result(customer);
     }
 
-
     @Data
     @AllArgsConstructor
     static class CustomerDto {

@@ -3,7 +3,7 @@ package perfumeManage.perfumeManagingSystem.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import perfumeManage.perfumeManagingSystem.domain.Perfume;
+import perfumeManage.perfumeManagingSystem.domain.product.Perfume;
 import perfumeManage.perfumeManagingSystem.repository.PerfumeRepository;
 
 import java.util.List;

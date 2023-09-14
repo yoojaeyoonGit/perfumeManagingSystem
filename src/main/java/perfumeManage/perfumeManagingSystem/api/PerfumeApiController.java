@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import perfumeManage.perfumeManagingSystem.domain.Perfume;
+import perfumeManage.perfumeManagingSystem.domain.product.Perfume;
 import perfumeManage.perfumeManagingSystem.service.PerfumeService;
 
 import javax.validation.Valid;

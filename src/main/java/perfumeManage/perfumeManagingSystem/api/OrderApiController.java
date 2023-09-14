@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.domain.product.Diffuser;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.repository.OrderRepository;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserService;
@@ -59,11 +61,10 @@ public class OrderApiController {
         Customer customer = customerService.findCustomerById(id);
         Order order = new Order();
         order.setCustomer(customer);
-        orderService.save(order);
+        orderService.createOrder(order);
         List<OrderDto> orderDtoList = new ArrayList<>();
 
         for (OrderRequest request : orderRequest) {
-
             Diffuser diffuser = diffuserService.findById(request.getDiffuserId());
             Deadline deadline = new Deadline(request.getYear(), request.getMonth(), request.getDate());
             orderService.createDiffRequest(order, diffuser, deadline, request.getAmount());

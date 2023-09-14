@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import perfumeManage.perfumeManagingSystem.domain.*;
-import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestDto;
-import perfumeManage.perfumeManagingSystem.dto.DiffuserRequestStatusDetect;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.repository.CompleteRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.DiffuserProductRequestRepository;
 import perfumeManage.perfumeManagingSystem.repository.ProcessingRequestRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service

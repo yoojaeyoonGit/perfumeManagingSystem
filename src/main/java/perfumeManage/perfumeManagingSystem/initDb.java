@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.domain.product.Diffuser;
+import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;

@@ -3,8 +3,6 @@ package perfumeManage.perfumeManagingSystem.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import perfumeManage.perfumeManagingSystem.domain.CompleteRequest;
-import perfumeManage.perfumeManagingSystem.domain.DiffuserProductRequest;
-import perfumeManage.perfumeManagingSystem.domain.ProcessingRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;

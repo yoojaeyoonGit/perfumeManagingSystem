@@ -1,32 +1,33 @@
-package perfumeManage.perfumeManagingSystem.domain;
+package perfumeManage.perfumeManagingSystem.domain.productionRequest;
 
 import lombok.Getter;
 import lombok.Setter;
+import perfumeManage.perfumeManagingSystem.domain.*;
+import perfumeManage.perfumeManagingSystem.domain.product.Diffuser;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 import static javax.persistence.FetchType.LAZY;
 
+
 @Entity
-@Getter @Setter
-public class PerfumeProductRequest {
-    @Id @GeneratedValue
-    @Column(name = "perfumeProductRequest_id")
-    private Long Id;
+@DiscriminatorColumn(name = "type")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Getter
+@Setter
+public class ProductRequest {
+    @Id
+    @GeneratedValue
+    @Column(name = "diffuserProductRequest_id")
+    private Long id;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "diffuser_id")
-    private Perfume perfume;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "processingRequest_id")
@@ -34,18 +35,13 @@ public class PerfumeProductRequest {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "completeRequest_id")
-    private CompleteRequest  completeRequest;
-
-    private String name;
-
-    private String recipe;
+    private CompleteRequest completeRequest;
 
     private int amount;
 
-    private LocalDate deadline;
-
-    private String image;
+    private Deadline deadline;
 
     @Enumerated(EnumType.STRING)
     private ProductionStatus status;
+
 }
