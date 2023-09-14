@@ -31,14 +31,14 @@ public class DiffuserProductRequestApiController {
             List<DiffuserProductRequestDto> diffuserProductRequestsDto = diffuserProductRequests.stream()
                     .map(d -> new DiffuserProductRequestDto(d))
                     .collect(Collectors.toList());
-            return new Result(diffuserProductRequestsDto);
+            return new Result<>(diffuserProductRequestsDto);
 
         } else {
             List<DiffuserProductRequest> diffuserProductRequests = diffuserProductRequestService.findAllDiffuserProductRequest();
             List<DiffuserProductRequestDto> diffuserProductRequestsDto = diffuserProductRequests.stream()
                     .map(d -> new DiffuserProductRequestDto(d))
                     .collect(Collectors.toList());
-            return new Result(diffuserProductRequestsDto);
+            return new Result<>(diffuserProductRequestsDto);
         }
     }
 

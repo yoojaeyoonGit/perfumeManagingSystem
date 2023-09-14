@@ -22,7 +22,7 @@ public class PerfumeApiController {
     public DiffuserApiController.OneResult findOneDiffuser(@PathVariable("id") Long id) {
         Perfume perfume = perfumeService.findById(id);
         FindPerfumeDto perfumeDto = new PerfumeApiController.FindPerfumeDto(id, perfume.getName());
-        return new DiffuserApiController.OneResult(perfumeDto);
+        return new DiffuserApiController.OneResult<>(perfumeDto);
     }
 
     @GetMapping("/api/perfumes")
@@ -31,7 +31,7 @@ public class PerfumeApiController {
         List<FindPerfumeDto> perfumes = findAllPerfumes.stream()
                 .map(o -> new FindPerfumeDto(o.getId(), o.getName()))
                 .collect(Collectors.toList());
-        return new Result(perfumes.size(), perfumes);
+        return new Result<>(perfumes.size(), perfumes);
     }
 
     @PostMapping("/api/new/perfume")
@@ -43,7 +43,7 @@ public class PerfumeApiController {
             perfumeService.save(perfume);
 
             CreatePerfumeResponse createPerfumeResponse = new CreatePerfumeResponse(perfume.getName(), perfume.getRecipe());
-            return new OneResult(createPerfumeResponse);
+            return new OneResult<>(createPerfumeResponse);
     }
 
 
@@ -80,7 +80,7 @@ public class PerfumeApiController {
             list.add(createPerfumeResponse);
         }
 
-        return new OneResult(list);
+        return new OneResult<>(list);
     }
 
     @Data

@@ -28,7 +28,7 @@ public class CustomerApiController {
         List<CustomerDto> customer = findCustomer.stream()
                 .map(m -> new CustomerDto(m.getId(), m.getName()))
                 .collect(Collectors.toList());
-        return new Result(customer);
+        return new Result<>(customer);
     }
 
     @Data
@@ -45,7 +45,7 @@ public class CustomerApiController {
     public Result findMember(@PathVariable("id") Long id) {
         Customer findCustomer = customerService.findCustomerById(id);
         CustomerDto customerDto = new CustomerDto(id, findCustomer.getName());
-        return new Result(customerDto);
+        return new Result<>(customerDto);
     }
 
     @PostMapping("/api/customer")
@@ -62,7 +62,7 @@ public class CustomerApiController {
         customerService.saveCustomer(customer);
 
         CreateCustomerResponse createCustomerResponse = new CreateCustomerResponse(customer.getId(), customer.getName());
-        return new Result(createCustomerResponse);
+        return new Result<>(createCustomerResponse);
     }
 
     @PutMapping("/api/customer/{id}")
@@ -73,7 +73,7 @@ public class CustomerApiController {
         customerService.updateCustomer(id, updateCustomerRequest.getName());
         Customer customer = customerService.findCustomerById(id);
         UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse(id, customer.getName());
-        return new Result(updateCustomerResponse);
+        return new Result<>(updateCustomerResponse);
     }
 
 

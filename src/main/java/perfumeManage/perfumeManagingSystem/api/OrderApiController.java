@@ -71,7 +71,7 @@ public class OrderApiController {
             OrderDto orderDto = new OrderDto(order);
             orderDtoList.add(orderDto);
         }
-        return new Result(orderDtoList);
+        return new Result<>(orderDtoList);
     }
 
     @Data
@@ -175,6 +175,6 @@ public class OrderApiController {
         List<OrderDto> orderDtos = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
-        return new ResultMany(orders.size(), orderDtos);
+        return new ResultMany<>(orders.size(), orderDtos);
     }
 }

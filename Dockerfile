@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim AS build
+FROM openjdk:11-jre-slim
 
 COPY . /app
 
@@ -11,9 +11,9 @@ RUN chmod +x gradlew
 
 RUN ./gradlew build
 
-FROM openjdk:11-jre-slim
+#FROM openjdk:11-jre-slim
 
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=build/libs/perfumeManagingSystem-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 
 COPY wait-for-it.sh wait-for-it.sh

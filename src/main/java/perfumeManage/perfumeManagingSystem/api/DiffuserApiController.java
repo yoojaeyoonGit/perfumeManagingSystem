@@ -21,7 +21,7 @@ public class DiffuserApiController {
     public OneResult findOneDiffuser(@PathVariable("id") Long id) {
         Diffuser diffuser = diffuserService.findById(id);
         FindDiffuserDto diffuserDto = new FindDiffuserDto(id, diffuser.getName());
-        return new OneResult(diffuserDto);
+        return new OneResult<>(diffuserDto);
     }
 
     @GetMapping("/api/diffusers")
@@ -30,7 +30,7 @@ public class DiffuserApiController {
         List<FindDiffuserDto> diffs = findAllDiffusers.stream()
                 .map(o -> new FindDiffuserDto(o.getId(), o.getName()))
                 .collect(Collectors.toList());
-        return new Result(findAllDiffusers.size(), diffs);
+        return new Result<>(findAllDiffusers.size(), diffs);
     }
 
     @PostMapping("/api/new/diffuser")
@@ -43,7 +43,7 @@ public class DiffuserApiController {
 
         CreateDiffuserResponse createDiffuserResponse = new CreateDiffuserResponse(diffuser.getName(), diffuser.getRecipe());
 
-        return new OneResult(createDiffuserResponse);
+        return new OneResult<>(createDiffuserResponse);
     }
 
 
