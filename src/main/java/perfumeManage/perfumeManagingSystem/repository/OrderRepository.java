@@ -17,7 +17,7 @@ public class OrderRepository {
     }
 
     public List<Order> findByJoinFetchByAuth() {
-        return em.createQuery("select o from Order o" +
+        return em.createQuery("select distinct o from Order o" +
                         " join fetch o.customer c" +
                         " join fetch o.diffuserProductRequests dr" +
                         " join fetch dr.diffuser diff", Order.class)
@@ -31,12 +31,16 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    public List<Order> findAll() {
-        return em.createQuery("select o from Order o", Order.class)
+    public List<Order> findAllOrder() {
+        return em.createQuery("select o from Order o" +
+                        " join fetch o.customer", Order.class)
+                        //ToOne  관계는 fetch join 걸어주는게 좋음
+                        // row 수를 증가 시키지 않기 떄문에
+
                 .getResultList();
     }
 
-    public void save(Order order){
+    public void save(Order order) {
         em.persist(order);
     }
 }

@@ -44,9 +44,9 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
-    }
+//    public List<Order> findAll() {
+//        return orderRepository.findAll();
+//    }
 
     public List<Order> findByAuth(Long id) {
         return orderRepository.findByAuth(id);

@@ -4,11 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 import org.springframework.web.bind.annotation.*;
 import perfumeManage.perfumeManagingSystem.domain.*;
 import perfumeManage.perfumeManagingSystem.domain.product.Diffuser;
 import perfumeManage.perfumeManagingSystem.domain.productionRequest.DiffuserProductRequest;
 import perfumeManage.perfumeManagingSystem.repository.OrderRepository;
+import perfumeManage.perfumeManagingSystem.repository.query.DiffuserProductRequestQueryDto;
+import perfumeManage.perfumeManagingSystem.repository.query.OrderFlatDto;
+import perfumeManage.perfumeManagingSystem.repository.query.OrderQueryDto;
+import perfumeManage.perfumeManagingSystem.repository.query.OrderQueryRepository;
 import perfumeManage.perfumeManagingSystem.service.CustomerService;
 import perfumeManage.perfumeManagingSystem.service.DiffuserService;
 import perfumeManage.perfumeManagingSystem.service.OrderService;
@@ -27,6 +32,7 @@ public class OrderApiController {
     private final CustomerService customerService;
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
     private final DiffuserService diffuserService;
 
 
@@ -37,7 +43,7 @@ public class OrderApiController {
             List<Order> orders = orderRepository.findByJoinFetchByAuth();
             return getOrderDtoList(orders);
         } else {
-            List<Order> orders = orderService.findAll();
+            List<Order> orders = orderRepository.findAllOrder();
             return getOrderDtoList(orders);
         }
     }
@@ -49,13 +55,36 @@ public class OrderApiController {
             List<Order> orders = orderService.findByAuth(customer.getId());
             return getOrderDtoList(orders);
         } else {
-            List<Order> orders = orderService.findAll();
+            List<Order> orders = orderRepository.findAllOrder();
             return getOrderDtoList(orders);
         }
     }
 
+    @GetMapping("api/v3/orders/{id}")  // N + 1 문제
+    public ResultMany ordersV3(@PathVariable("id") Long id) { // orderDto를 참조하지 않은 이유는
+        List<OrderQueryDto> orderQueryDtos = orderQueryRepository.findOrderQueryDtos(id);
+        return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
+    }
 
-    @PostMapping("api/orders/{id}")
+
+    @GetMapping("api/v4/orders/{id}")
+    public ResultMany ordersV4(@PathVariable("id") Long id) {
+        List<OrderQueryDto> orderQueryDtos = orderQueryRepository.findAllByDto_optimization(id);
+        return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
+    }
+
+    @GetMapping("api/v5/orders/{id}")
+    public ResultMany ordersV5(@PathVariable("id") Long id) {
+        List<OrderFlatDto> orderQueryDtos = orderQueryRepository.findAllBy_flat(id);
+
+        orderQueryDtos.stream()
+                .collect(Collectors.groupingBy( o -> new OrderQueryDto(o.getOrderId(), o.getCustomerName())ffu
+                        Collectors.mapping(o -> new DiffuserProductRequestQueryDto(o.Order)))
+//                        mapping
+        return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
+    }
+
+        @PostMapping("api/orders/{id}")
     public Result createOrder(@PathVariable("id") Long id,
                               @RequestBody @Valid List<OrderRequest> orderRequest) {
         Customer customer = customerService.findCustomerById(id);

@@ -40,10 +40,14 @@ public class initDb {
                 Diffuser diffuser = createDiffuser("holly day", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
                 em.persist(diffuser);
 
-                DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(customer, diffuser, 3500,  new Deadline(2025, 11, 4));
+                Order order = new Order();
+                order.setCustomer(customer);
+                em.persist(order);
+
+                DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(order, diffuser, 3500,  new Deadline(2025, 11, 4));
                 em.persist(diffuserProductRequest);
 
-                customer.addDiffuserProductRequest(diffuserProductRequest);
+//                customer.addDiffuserProductRequest(diffuserProductRequest);
 
                 if (i >= 3 && i < 6) {
                     diffuserProductRequest.setStatus(ProductionStatus.PROCESSING);
@@ -58,14 +62,18 @@ public class initDb {
             em.persist(customer);
 
             for (int i = 0; i < 9; i++) {
-                Diffuser diffuser = createDiffuser("홍차티", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
+                Diffuser diffuser = createDiffuser("holly day", "Lanvin 30%, Versace 25%, Creed 45%", "사진");
                 em.persist(diffuser);
 
+                Order order = new Order();
+                order.setCustomer(customer);
+                em.persist(order);
 
-                DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(customer, diffuser, 3500,  new Deadline(2025, 11, 4));
+                DiffuserProductRequest diffuserProductRequest = DiffuserProductRequest.createDiffuserProductRequest(order, diffuser, 3500,  new Deadline(2025, 11, 4));
                 em.persist(diffuserProductRequest);
 
                 customer.addDiffuserProductRequest(diffuserProductRequest);
+
 
                 if (i >= 3 && i < 6) {
                     diffuserProductRequest.setStatus(ProductionStatus.PROCESSING);

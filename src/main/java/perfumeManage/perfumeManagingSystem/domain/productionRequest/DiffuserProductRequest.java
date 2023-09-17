@@ -17,9 +17,9 @@ public class DiffuserProductRequest extends ProductRequest {
     private Diffuser diffuser;
 
     // 생성 메서드
-    public static DiffuserProductRequest createDiffuserProductRequest(Customer customer, Diffuser diffuser, int amount, Deadline deadline) {
+    public static DiffuserProductRequest createDiffuserProductRequest(Order order, Diffuser diffuser, int amount, Deadline deadline) {
         DiffuserProductRequest diffuserProductRequest = new DiffuserProductRequest();
-        diffuserProductRequest.setCustomer(customer);
+        diffuserProductRequest.setOrder(order);
         diffuserProductRequest.setAmount(amount);
         diffuserProductRequest.setDeadline(deadline);
         diffuserProductRequest.setDiffuser(diffuser);

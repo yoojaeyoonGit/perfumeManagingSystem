@@ -13,7 +13,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
-public class ProcessingRequest {
+public class ProcessingRequest { // 진행중인 주문 저장소 이 안에 디퓨저랑 향수 리스트 나눠 저장
     @Id @GeneratedValue
     @Column(name = "ProcessingRequest_id")
     private Long id;
