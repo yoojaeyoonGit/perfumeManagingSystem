@@ -21,7 +21,7 @@ services:
   webapp: # 내가 선택한 서비스의 이름 변경 가능함
     build:
       context: . # dockerfile의 위치
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     environment:
       WAIT_HOSTS: db:3306
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/perfumeDB?createDatabaseIfNotExist=true&characterEncoding=UTF-8&profileSql=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
