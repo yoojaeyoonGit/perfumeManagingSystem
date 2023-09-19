@@ -73,16 +73,20 @@ public class OrderApiController {
         return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
     }
 
-    @GetMapping("api/v5/orders/{id}")
-    public ResultMany ordersV5(@PathVariable("id") Long id) {
-        List<OrderFlatDto> orderQueryDtos = orderQueryRepository.findAllBy_flat(id);
-
-        orderQueryDtos.stream()
-                .collect(Collectors.groupingBy( o -> new OrderQueryDto(o.getOrderId(), o.getCustomerName())ffu
-                        Collectors.mapping(o -> new DiffuserProductRequestQueryDto(o.Order)))
-//                        mapping
-        return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
-    }
+//    @GetMapping("api/v5/orders/{id}")
+//    public ResultMany ordersV5(@PathVariable("id") Long id) {
+//        List<OrderFlatDto> orderQueryDtos = orderQueryRepository.findAllBy_flat(id);
+//
+//        orderQueryDtos.stream()
+//                .collect(Collectors.groupingBy( o -> new OrderQueryDto(o.getOrderId(), o.getCustomerName()),
+//                                Collectors.mapping(o -> new DiffuserProductRequestQueryDto(o.getOrderId(),  o.getDiffuserProductRequestId(),  o.getDiffuserId(), o.getDiffuserName(), o.getAmount(), o.getDeadline(), o.getStatus()), Collectors.toList()
+//                                )).entrySet().stream()
+//                        .map(e -> new OrderQueryDto(e.getKey().getOrderId(),
+//                                e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getOrderStatus(),
+//                                e.getKey().getAddress(), e.getValue()))
+//                        .collect(Collectors.toList());
+//        return new ResultMany<>(orderQueryDtos.size(), orderQueryDtos);
+//    }
 
         @PostMapping("api/orders/{id}")
     public Result createOrder(@PathVariable("id") Long id,
