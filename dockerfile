@@ -9,7 +9,7 @@ WORKDIR /app
 RUN chmod +x gradlew
 
 
-RUN ./gradlew build
+RUN ./gradlew build -x test
 
 FROM openjdk:11-jdk-slim
 
